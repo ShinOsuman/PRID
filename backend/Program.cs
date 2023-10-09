@@ -1,3 +1,5 @@
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
 
@@ -10,6 +12,14 @@ builder.Services.AddDbContext<Context>(opt => opt.UseSqlite("Data Source=prid_23
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Auto Mapper Configurations
+builder.Services.AddScoped(provider => new MapperConfiguration(cfg => {
+        cfg.AddProfile(new MappingProfile(provider.GetService<Context>()!));
+        // see: https://github.com/AutoMapper/AutoMapper.Collection
+        cfg.AddCollectionMappers();
+        cfg.UseEntityFrameworkCoreModel<Context>(builder.Services);
+    }).CreateMapper());
 
 var app = builder.Build();
 
