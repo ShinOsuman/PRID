@@ -5,17 +5,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from '../components/app/app.component';
+import { NavMenuComponent } from '../components/nav-menu/nav-menu.component';
+import { UserListComponent } from '../components/userlist/userlist.component';
+import { AppRoutes } from '../routing/app.routing';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavMenuComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-    ])
+    AppRoutes
   ],
   providers: [],
   bootstrap: [AppComponent]
