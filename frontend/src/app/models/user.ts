@@ -1,3 +1,6 @@
+import { Type } from "class-transformer";
+import 'reflect-metadata';
+
 export class User {
     id?: number;
     pseudo?: string;
@@ -5,16 +8,20 @@ export class User {
     email?: string;
     lastname?: string;
     firstName?: string;
-    birthDate?: string;
+    @Type(() => Date)
+    birthDate?: Date;
 
-    constructor(data: any) {
-        if (data) {
-            this.pseudo = data.pseudo;
-            this.password = data.password;
-            this.firstName = data.firstName;
-            this.lastname = data.lastname;
-            this.birthDate = data.birthDate &&
-                data.birthDate.length > 10 ? data.birthDate.substring(0, 10) : data.birthDate;
-        }
+    get display(): string {
+        return `${this.pseudo} (${this.birthDate ? this.age + ' years old' : 'age unknown'})`;
+    } 
+
+    get age(): number | undefined {
+        if (!this.birthDate)
+            return undefined;
+        var today = new Date();
+        var age = today.getFullYear() - this.birthDate.getFullYear();
+        today.setFullYear(today.getFullYear() - age);
+        if (this.birthDate > today) age--;
+        return age;
     }
 }
