@@ -1,6 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace prid.Models;
+
+public enum Role 
+{
+    Admin = 2, Manager = 1, User = 0
+}
+
 
 public class User
 {
@@ -12,6 +20,8 @@ public class User
     public string? LastName { get; set; }
     public string? FirstName { get; set; }
     public DateTimeOffset? BirthDate { get; set; }
+
+    public Role Role { get; set; } = Role.User;
 
     public int? Age {
         get {
@@ -26,4 +36,8 @@ public class User
             return age;
         }
     }
+
+    [NotMapped]
+    public string? Token { get; set; }
+
 }

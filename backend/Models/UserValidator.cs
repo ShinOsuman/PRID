@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using prid.Helpers;
 using System.Data;
 using System.Text.RegularExpressions;
 
@@ -40,6 +41,15 @@ public class UserValidator : AbstractValidator<User>
             .MinimumLength(3)
             .MaximumLength(50)
             .Matches(@"^\S.*\S$");
+
+        RuleFor(u => u.Role)
+            .IsInEnum();
+        
+        // Validations spécifiques pour l'authentification
+        RuleSet("authenticate", () => {
+            RuleFor(u => u.Token)
+                .NotNull().OverridePropertyName("Password").WithMessage("Incorrect password.");
+        });
 
         RuleFor(u => new {u.LastName, u.FirstName})
             .Must(u => String.IsNullOrEmpty(u.LastName) && String.IsNullOrEmpty(u.FirstName) ||
@@ -89,5 +99,11 @@ public class UserValidator : AbstractValidator<User>
                                                 u.LastName == lastName &&
                                                 u.FirstName == firstName,
                                                 cancellationToken: token);
+    }
+
+    public async Task<FluentValidation.Results.ValidationResult> ValidateForAuthenticate(User? user) {
+    if (user == null)
+        return ValidatorHelper.CustomError("User not found.", "Pseudo");
+    return await this.ValidateAsync(user!, o => o.IncludeRuleSets("authenticate"));
     }
 }

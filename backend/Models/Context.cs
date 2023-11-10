@@ -18,8 +18,9 @@ public class Context : DbContext
         modelBuilder.Entity<User>().HasIndex(u => new {u.LastName, u.FirstName}).IsUnique();
 
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Pseudo = "ben", Password = "ben", Email = "ben@test.com", BirthDate=new DateTime(1970, 1, 2) },
-            new User { Id = 2, Pseudo = "bruno", Password = "bruno", Email = "bruno@test.com", BirthDate=new DateTime(1971, 2, 3) }
+            new User { Id = 1, Pseudo = "admin", Password = "admin", FirstName = "Admin", Email = "admin@test.com", LastName = "Admin", Role = Role.Admin },
+            new User { Id = 2, Pseudo = "ben", Password = "ben", Email = "ben@test.com", BirthDate=new DateTime(1970, 1, 2) },
+            new User { Id = 3, Pseudo = "bruno", Password = "bruno", Email = "bruno@test.com", BirthDate=new DateTime(1971, 2, 3) }
         );
     }
 
