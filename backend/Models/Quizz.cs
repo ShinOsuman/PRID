@@ -11,8 +11,12 @@ public class Quizz {
     public bool IsClosed { get; set; } = true;
     public DateTimeOffset? Start { get; set; }
     public DateTimeOffset? Finish { get; set; }
+    public Database Database { get; set; } = null!;
+    public int DatabaseId { get; set; }
+    public ICollection<Question> Questions { get; set; } = new HashSet<Question>();
+    public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
 
-    public virtual Database Database { get; set; } = null!;
+
 
 
 }
