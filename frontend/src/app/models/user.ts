@@ -2,9 +2,8 @@ import { Type } from "class-transformer";
 import 'reflect-metadata';
 
 export enum Role {
-    User = 0,
-    Manager = 1,
-    Admin = 2
+    Teacher = 0,
+    Student = 1
 }
 
 export class User {
@@ -16,7 +15,7 @@ export class User {
     firstName?: string;
     @Type(() => Date)
     birthDate?: Date;
-    role: Role = Role.User;
+    role: Role = Role.Student;
     token?: string;
 
     public get roleAsString(): string {

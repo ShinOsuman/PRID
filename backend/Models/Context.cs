@@ -17,6 +17,10 @@ public class Context : DbContext
         modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => u.Pseudo).IsUnique();
         modelBuilder.Entity<User>().HasIndex(u => new {u.LastName, u.FirstName}).IsUnique();
+        modelBuilder.Entity<User>()
+            .HasDiscriminator(u => u.Role)
+            .HasValue<Teacher>(Role.Teacher)
+            .HasValue<Student>(Role.Student);
 
         SeedData = new SeedData(modelBuilder);
     }

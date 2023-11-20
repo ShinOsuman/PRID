@@ -25,7 +25,7 @@ public class UsersController : ControllerBase
     }
 
     // GET: api/Users
-    [Authorized(Role.Admin)]
+    [Authorized(Role.Teacher)]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll() {
         // Récupère une liste de tous les membres
@@ -72,7 +72,7 @@ public class UsersController : ControllerBase
         return CreatedAtAction(nameof(GetOne), new {id = newUser.Id}, _mapper.Map<UserDTO>(newUser));
     }
 
-    [Authorized(Role.Admin)]
+    [Authorized(Role.Teacher)]
     [HttpPut]
     public async Task<IActionResult> PutMember(UserDTO dto) {
         var user = await _context.Users.FindAsync(dto.Id);
@@ -86,7 +86,7 @@ public class UsersController : ControllerBase
         return NoContent();
     }
 
-    [Authorized(Role.Admin)]
+    [Authorized(Role.Teacher)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMember(int id) {
         var user = await _context.Users.FindAsync(id);

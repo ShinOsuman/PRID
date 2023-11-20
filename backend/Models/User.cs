@@ -6,11 +6,11 @@ namespace prid.Models;
 
 public enum Role 
 {
-    Admin = 2, Manager = 1, User = 0
+    Teacher = 0, Student = 1
 }
 
 
-public class User
+public abstract class User
 {
     [Key]
     public int Id { get; set;}
@@ -21,7 +21,7 @@ public class User
     public string? FirstName { get; set; }
     public DateTimeOffset? BirthDate { get; set; }
 
-    public Role Role { get; set; } = Role.User;
+    public Role Role { get; set; }
     public string? RefreshToken { get; set; }
 
 
