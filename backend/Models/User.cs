@@ -22,6 +22,8 @@ public class User
     public DateTimeOffset? BirthDate { get; set; }
 
     public Role Role { get; set; } = Role.User;
+    public string? RefreshToken { get; set; }
+
 
     public int? Age {
         get {

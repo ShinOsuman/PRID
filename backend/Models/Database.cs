@@ -8,5 +8,5 @@ public class Database {
     public string Name { get; set; } = "";
     public string? Description { get; set; }
 
-    public ICollection<Quizz> Quizzes { get; set; } = new HashSet<Quizz>();
+    public ICollection<Quiz> Quizzes { get; set; } = new HashSet<Quiz>();
 }
