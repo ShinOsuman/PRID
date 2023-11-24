@@ -12,6 +12,11 @@ import { UnknownComponent } from '../components/unknown/unknown.component';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SetFocusDirective } from '../directives/setfocus.directive';
+import { SharedModule } from './shared.module';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { fr } from 'date-fns/locale';
 
 
 
@@ -25,17 +30,35 @@ import { HomeComponent } from '../components/home/home.component';
     LoginComponent,
     UnknownComponent,
     RestrictedComponent,
-    HomeComponent
+    HomeComponent,
+    SetFocusDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutes
+    AppRoutes,
+    BrowserAnimationsModule,
+    SharedModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: fr },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: {
+          dateInput: ['dd/MM/yyyy'],
+        },
+        display: {
+          dateInput: 'dd/MM/yyyy',
+          monthYearLabel: 'MMM yyyy',
+          dateA11yLabel: 'dd/MM/yyyy',
+          monthYearA11yLabel: 'MMM yyyy',
+        },
+      },
+    },
   ],
   bootstrap: [AppComponent]
 })
