@@ -6,6 +6,7 @@ import { UnknownComponent } from '../components/unknown/unknown.component';
 import { AuthGuard } from '../services/auth.guard';
 import { Role } from '../models/user';
 import { HomeComponent } from '../components/home/home.component';
+import { QuizzesComponent } from '../components/quizzes/quizzes.component';
 
 
 const appRoutes: Routes = [
@@ -20,8 +21,9 @@ const appRoutes: Routes = [
       path: 'login',
       component: LoginComponent
   },
+  { path: 'quizzes', component: QuizzesComponent },
   { path: 'restricted', component: RestrictedComponent },
-  { path: '**', component: UnknownComponent }
+  { path: '**', component: UnknownComponent },
 ];
 
 export const AppRoutes = RouterModule.forRoot(appRoutes);
