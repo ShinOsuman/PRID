@@ -15,7 +15,7 @@ export class QuizzesComponent{
     ) {
         // redirect to home if not logged
         if (!this.authenticationService.currentUser) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/restricted']);
         }
     }
 }
