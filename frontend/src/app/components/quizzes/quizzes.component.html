@@ -1,1 +1,5 @@
 <h1>Quizz</h1>
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="filterChanged($event)" [value]="filter" appSetFocus>
+</mat-form-field>
