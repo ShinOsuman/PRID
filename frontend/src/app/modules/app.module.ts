@@ -18,7 +18,7 @@ import { SharedModule } from './shared.module';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { fr } from 'date-fns/locale';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
-
+import { QuizListComponent } from '../components/quizzes/quiz-list.component';
 
 
 
@@ -33,7 +33,8 @@ import { QuizzesComponent } from '../components/quizzes/quizzes.component';
     RestrictedComponent,
     HomeComponent,
     SetFocusDirective,
-    QuizzesComponent
+    QuizzesComponent,
+    QuizListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
