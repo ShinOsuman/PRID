@@ -10,10 +10,11 @@ import { QuizService } from "src/app/services/quiz.service";
 import { StateService } from "src/app/services/state.service";
 
 @Component({
-    selector: 'quiz-list',
-    templateUrl: './quiz-list.component.html'
+    selector: 'training-quiz-list',
+    templateUrl: './training-quiz-list.component.html',
+    styleUrls: ['./training-quiz-list.component.css']
 })
-export class QuizListComponent implements AfterViewInit, OnDestroy {
+export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
     displayedColumns: string [] = ['Nom'];
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();
     state: MatTableState;

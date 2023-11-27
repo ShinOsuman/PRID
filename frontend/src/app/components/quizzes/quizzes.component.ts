@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { User } from 'oidc-client';
 import { MatTableDataSource } from '@angular/material/table';
 import { Quiz } from 'src/app/models/quiz';
 import { MatTableState } from 'src/app/helpers/mattable.state';
