@@ -1,3 +1,6 @@
+import { Type } from 'class-transformer';
+import { Database } from './database';
+
 
 export class Quiz {
     id?: number;
@@ -9,5 +12,7 @@ export class Quiz {
     startDate?: Date;
     endDate?: Date;
     databaseId?: number;
+    @Type(() => Database)
+    database?: Database; 
 
 }

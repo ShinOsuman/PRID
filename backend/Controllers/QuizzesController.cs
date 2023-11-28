@@ -11,7 +11,6 @@ using prid.Helpers;
 
 namespace prid_tuto.Controllers;
 
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class QuizzesController : ControllerBase
@@ -25,9 +24,12 @@ public class QuizzesController : ControllerBase
     }
 
     [HttpGet("trainingQuizzes")]
-    public async Task<ActionResult<IEnumerable<QuizDTO>>> GetAll() {
-        // Récupère une liste de tous les membres
-        return _mapper.Map<List<QuizDTO>>(await _context.Quizzes.Where(q => !q.IsTest).ToListAsync());
+    public async Task<ActionResult<IEnumerable<TrainingWithDatabaseDto>>> GetTrainings() {
+        // Récupère une liste de tous les quiz d'entraînement
+        return _mapper.Map<List<TrainingWithDatabaseDto>>(await _context.Quizzes
+                                                        .Where(q => !q.IsTest)
+                                                        .Include(q => q.Database)
+                                                        .ToListAsync());
     }
 
 

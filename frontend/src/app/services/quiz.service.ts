@@ -8,7 +8,7 @@ import { plainToInstance } from "class-transformer";
 export class QuizService {
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string){ }
 
-    getAll(): Observable<Quiz[]> {
+    getTrainings(): Observable<Quiz[]> {
         return this.http.get<any[]>(`${this.baseUrl}api/Quizzes/trainingQuizzes`).pipe(
             map(res => plainToInstance(Quiz, res))
         );

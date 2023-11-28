@@ -10,3 +10,9 @@ public class Database {
 
     public ICollection<Quiz> Quizzes { get; set; } = new HashSet<Quiz>();
 }
+
+public class DatabaseDto {
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? Description { get; set; }
+}

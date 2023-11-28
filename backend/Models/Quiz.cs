@@ -30,6 +30,9 @@ public class QuizDTO{
         
     public DateTimeOffset? StartDate { get; set; }
     public DateTimeOffset? EndDate { get; set; }
-    public int DatabaseId { get; set; }
 
+}
+
+public class TrainingWithDatabaseDto : QuizDTO {
+    public DatabaseDto Database { get; set; } = null!;
 }

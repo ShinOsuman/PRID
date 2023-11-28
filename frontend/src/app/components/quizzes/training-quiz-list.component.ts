@@ -15,7 +15,7 @@ import { StateService } from "src/app/services/state.service";
     styleUrls: ['./training-quiz-list.component.css']
 })
 export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
-    displayedColumns: string [] = ['Nom'];
+    displayedColumns: string [] = ['Nom', 'Base de données'];
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();
     state: MatTableState;
     filter: string = '';
@@ -41,7 +41,7 @@ export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
     }
 
     refresh(){
-        this.quizService.getAll().subscribe(quizzes => {
+        this.quizService.getTrainings().subscribe(quizzes => {
             this.dataSource.data = quizzes;
             this.state.restoreState(this.dataSource);
             this.filter=this.state.filter;
