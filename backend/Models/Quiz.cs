@@ -20,11 +20,13 @@ public class Quiz
     public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
     [NotMapped]
     public string Status { get; set;}= "";
+    public string QuizStatus { get; set; } = "";
 
     public string GetStatus(User user)
     {
         string res = Attempts.Any(q => q.StudentId == user.Id) ? "EN_COURS" : "PAS_COMMENCE";
-        if(EndDate.HasValue){
+        var StudentAttempts = Attempts.Where(a => a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefault();
+        if(StudentAttempts != null && StudentAttempts.Finish.HasValue){
             res = "FINI";
         }
         return res;

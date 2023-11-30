@@ -33,10 +33,10 @@ public class QuizzesController : ControllerBase
         }
         // Récupère une liste de tous les quiz d'entraînement
         var quizzes = await _context.Quizzes
-                                                        .Where(q => !q.IsTest)
-                                                        .Include(q => q.Database)
-                                                        .Include(q => q.Attempts)
-                                                        .ToListAsync();
+                                    .Where(q => !q.IsTest)
+                                    .Include(q => q.Database)
+                                    .Include(q => q.Attempts)
+                                    .ToListAsync();
         foreach(var q in quizzes){
             q.Status = q.GetStatus(user);
         }
