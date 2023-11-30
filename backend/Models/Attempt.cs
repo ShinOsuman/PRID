@@ -11,3 +11,12 @@ public class Attempt {
     public int StudentId { get; set; }
 
 }
+
+public class AttemptDto {
+    public int Id { get; set; }
+    public DateTimeOffset? Start { get; set; }
+    public DateTimeOffset? Finish { get; set; }
+    public int QuizId { get; set; }
+    public int StudentId { get; set; }
+    
+}

@@ -13,6 +13,7 @@ export class Quiz {
     endDate?: Date;
     databaseId?: number;
     @Type(() => Database)
-    database?: Database; 
+    database?: Database;
+    status? : string;
 
 }

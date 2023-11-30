@@ -11,6 +11,7 @@ using prid.Helpers;
 
 namespace prid_tuto.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class QuizzesController : ControllerBase
@@ -25,11 +26,21 @@ public class QuizzesController : ControllerBase
 
     [HttpGet("trainingQuizzes")]
     public async Task<ActionResult<IEnumerable<TrainingWithDatabaseDto>>> GetTrainings() {
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
         // Récupère une liste de tous les quiz d'entraînement
-        return _mapper.Map<List<TrainingWithDatabaseDto>>(await _context.Quizzes
+        var quizzes = await _context.Quizzes
                                                         .Where(q => !q.IsTest)
                                                         .Include(q => q.Database)
-                                                        .ToListAsync());
+                                                        .Include(q => q.Attempts)
+                                                        .ToListAsync();
+        foreach(var q in quizzes){
+            q.Status = q.GetStatus(user);
+        }
+        return _mapper.Map<List<TrainingWithDatabaseDto>>(quizzes);
     }
 
 

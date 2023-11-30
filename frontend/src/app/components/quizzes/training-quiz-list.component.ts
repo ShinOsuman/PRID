@@ -15,7 +15,7 @@ import { StateService } from "src/app/services/state.service";
     styleUrls: ['./training-quiz-list.component.css']
 })
 export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
-    displayedColumns: string [] = ['Nom', 'Base de données'];
+    displayedColumns: string [] = ['Nom', 'Base de données', 'Statut'];
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();
     state: MatTableState;
     filter: string = '';
