@@ -20,7 +20,6 @@ public class Quiz
     public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
     [NotMapped]
     public string Status { get; set;}= "";
-    public string QuizStatus { get; set; } = "";
 
     public string GetStatus(User user)
     {
@@ -28,6 +27,15 @@ public class Quiz
         var StudentAttempts = Attempts.Where(a => a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefault();
         if(StudentAttempts != null && StudentAttempts.Finish.HasValue){
             res = "FINI";
+        }
+        return res;
+    }
+
+    public string GetTestStatus(User user)
+    {
+        string res = Attempts.Any(q => q.StudentId == user.Id) ? "FINI" : "PAS_COMMENCE";
+        if(EndDate!.Value <= DateTimeOffset.Now){
+            res = "CLOTURE";
         }
         return res;
     }
@@ -48,8 +56,6 @@ public class QuizDTO
     public DateTimeOffset? EndDate { get; set; }
     public ICollection<AttemptDto> Attempts { get; set; } = new HashSet<AttemptDto>();
     public string Status { get; set ; } = "";
-
-
 }
 
 public class TrainingWithDatabaseDto : QuizDTO

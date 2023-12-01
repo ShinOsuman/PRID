@@ -43,5 +43,24 @@ public class QuizzesController : ControllerBase
         return _mapper.Map<List<TrainingWithDatabaseDto>>(quizzes);
     }
 
+    [HttpGet("testQuizzes")]
+    public async Task<ActionResult<IEnumerable<TrainingWithDatabaseDto>>> GetTests() {
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
+        // Récupère une liste de tous les quiz de tests
+        var quizzes = await _context.Quizzes
+                                    .Where(q => q.IsTest)
+                                    .Include(q => q.Database)
+                                    .Include(q => q.Attempts)
+                                    .ToListAsync();
+        foreach(var q in quizzes){
+            q.Status = q.GetTestStatus(user);
+        }
+        return _mapper.Map<List<TrainingWithDatabaseDto>>(quizzes);
+    }
+
 
 }

@@ -3,5 +3,7 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="filterChanged($event)" [value]="filter" appSetFocus>
 </mat-form-field>
-<h2>Quiz d'entraînement :</h2>
-<training-quiz-list></training-quiz-list>
+<p>Quiz d'entraînement :</p>
+<quiz-list [quizType]="'training'"></quiz-list>
+<p>Quiz de test :</p>
+<quiz-list [quizType]="'test'"></quiz-list>

@@ -9,7 +9,8 @@ import { StateService } from 'src/app/services/state.service';
 
 @Component({
     selector: 'quizzes',
-    templateUrl: 'quizzes.component.html'
+    templateUrl: 'quizzes.component.html',
+    styleUrls: ['./quizzes.component.css']
 })
 export class QuizzesComponent{
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();

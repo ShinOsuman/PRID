@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import * as _ from "lodash-es";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -10,15 +10,17 @@ import { QuizService } from "src/app/services/quiz.service";
 import { StateService } from "src/app/services/state.service";
 
 @Component({
-    selector: 'training-quiz-list',
-    templateUrl: './training-quiz-list.component.html',
-    styleUrls: ['./training-quiz-list.component.css']
+    selector: 'quiz-list',
+    templateUrl: './quiz-list.component.html',
+    styleUrls: ['./quiz-list.component.css']
 })
-export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
-    displayedColumns: string [] = ['Nom', 'Base de données', 'Statut', 'Actions'];
+export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
+    displayedColumns: string []= [];
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();
     state: MatTableState;
     filter: string = '';
+
+    @Input() quizType: 'test' | 'training' = 'test';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -29,6 +31,12 @@ export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
         public snackBar: MatSnackBar
     ){
         this.state = this.stateService.quizListState;
+    }
+    
+    ngOnInit(): void {
+        this.displayedColumns = this.quizType === 'test'
+        ? ['Nom', 'Base de données', 'Date début', 'Date fin', 'Statut', 'Evaluation', 'Actions']
+        : ['Nom', 'Base de données', 'Statut', 'Actions']
     }
 
     ngAfterViewInit(): void {
@@ -41,11 +49,19 @@ export class TrainingQuizListComponent implements AfterViewInit, OnDestroy {
     }
 
     refresh(){
-        this.quizService.getTrainings().subscribe(quizzes => {
-            this.dataSource.data = quizzes;
-            this.state.restoreState(this.dataSource);
-            this.filter=this.state.filter;
-        })
+        if(this.quizType === 'training'){
+            this.quizService.getTrainings().subscribe(quizzes => {
+                this.dataSource.data = quizzes;
+                this.state.restoreState(this.dataSource);
+                this.filter=this.state.filter;
+            })
+        }else {
+            this.quizService.getTests().subscribe(quizzes => {
+                this.dataSource.data = quizzes;
+                this.state.restoreState(this.dataSource);
+                this.filter=this.state.filter;
+            })
+        }
     }
 
     ngOnDestroy(): void {
