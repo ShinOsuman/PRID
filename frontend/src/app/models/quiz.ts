@@ -17,6 +17,7 @@ export class Quiz {
     @Type(() => Database)
     database?: Database;
     status? : string;
+    evaluation? : string;
 
     get testStartDate(): string {
         return this.startDate !== null && this.startDate? this.startDate?.toLocaleDateString('fr-BE') : 'N/A';

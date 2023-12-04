@@ -20,6 +20,8 @@ public class Quiz
     public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
     [NotMapped]
     public string Status { get; set;}= "";
+    [NotMapped]
+    public string Evaluation { get; set; } = "N/A"; 
 
     public string GetStatus(User user)
     {
@@ -56,6 +58,7 @@ public class QuizDTO
     public DateTimeOffset? EndDate { get; set; }
     public ICollection<AttemptDto> Attempts { get; set; } = new HashSet<AttemptDto>();
     public string Status { get; set ; } = "";
+    public string Evaluation { get; set; } = "N/A"; 
 }
 
 public class TrainingWithDatabaseDto : QuizDTO
