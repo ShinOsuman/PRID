@@ -21,7 +21,7 @@ const appRoutes: Routes = [
       path: 'login',
       component: LoginComponent
   },
-  { path: 'quizzes', component: QuizzesComponent },
+  { path: 'quizzes', component: QuizzesComponent, canActivate: [AuthGuard], data: { roles: [Role.Student]} },
   { path: 'restricted', component: RestrictedComponent },
   { path: '**', component: UnknownComponent },
 ];
