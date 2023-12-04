@@ -26,4 +26,15 @@ export class Quiz {
     get testEndDate(): string {
         return this.endDate !== null && this.endDate? this.endDate?.toLocaleDateString('fr-BE') : 'N/A';
     }
+
+    get iconTooltip(): string {
+        if(this.status == "EN_COURS"){
+            return "poursuivre";
+        }else if(this.status == "PAS_COMMENCE"){
+            return "commencer";
+        }else if(this.status == "FINI"){
+            return "revoir";
+        }
+        return "";
+    }
 }

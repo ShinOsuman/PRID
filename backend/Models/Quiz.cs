@@ -21,7 +21,7 @@ public class Quiz
     [NotMapped]
     public string Status { get; set;}= "";
     [NotMapped]
-    public string Evaluation { get; set; } = "N/A"; 
+    public string Evaluation { get; set; } = "N/A";
 
     public string GetStatus(User user)
     {
@@ -40,6 +40,11 @@ public class Quiz
             res = "CLOTURE";
         }
         return res;
+    }
+
+    public string GetIconTooltip()
+    {
+        return "";
     }
 
 }
