@@ -22,6 +22,15 @@ public class Quiz
     public string Status { get; set;}= "";
     [NotMapped]
     public string Evaluation { get; set; } = "N/A";
+    [NotMapped]
+    public int FirstQuestionId { 
+        get{
+            return Questions.Where(q => q.QuizId == this.Id)
+                            .OrderBy(q => q.Order)
+                            .Select(q => q.Id)
+                            .FirstOrDefault();
+        } 
+     }
 
     public string GetStatus(User user)
     {
@@ -42,11 +51,6 @@ public class Quiz
         return res;
     }
 
-    public string GetIconTooltip()
-    {
-        return "";
-    }
-
 }
 
 
@@ -63,7 +67,8 @@ public class QuizDTO
     public DateTimeOffset? EndDate { get; set; }
     public ICollection<AttemptDto> Attempts { get; set; } = new HashSet<AttemptDto>();
     public string Status { get; set ; } = "";
-    public string Evaluation { get; set; } = "N/A"; 
+    public string Evaluation { get; set; } = "N/A";
+    public int FirstQuestionId { get; set; }
 }
 
 public class TrainingWithDatabaseDto : QuizDTO

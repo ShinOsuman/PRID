@@ -23,8 +23,7 @@ public class MappingProfile : Profile
         CreateMap<User, UserWithPasswordDTO>();
         CreateMap<UserWithPasswordDTO, User>();
 
-        CreateMap<Quiz, QuizDTO>()
-            .ForMember(dest => dest.Attempts, opt => opt.MapFrom(src => src.Attempts));
+        CreateMap<Quiz, QuizDTO>();
         CreateMap<QuizDTO, Quiz>();
 
         CreateMap<Quiz, TrainingWithDatabaseDto>();
@@ -35,5 +34,8 @@ public class MappingProfile : Profile
 
         CreateMap<Attempt,  AttemptDto>();
         CreateMap<AttemptDto, Attempt>();
+
+        CreateMap<Question, QuestionDto>();
+        CreateMap<QuestionDto, Question>();
     }
 }

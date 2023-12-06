@@ -3,13 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using prid.Helpers;
 
-namespace prid_tuto.Controllers;
+namespace prid.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]
@@ -36,6 +31,7 @@ public class QuizzesController : ControllerBase
                                     .Where(q => !q.IsTest)
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
+                                    .Include(q => q.Questions)
                                     .ToListAsync();
         foreach(var q in quizzes){
             q.Status = q.GetStatus(user);
@@ -55,6 +51,7 @@ public class QuizzesController : ControllerBase
                                     .Where(q => q.IsTest)
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
+                                    .Include(q => q.Questions)
                                     .ToListAsync();
         foreach(var q in quizzes){
             q.Status = q.GetTestStatus(user);

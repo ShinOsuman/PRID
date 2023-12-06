@@ -8,6 +8,7 @@ import { MatTableState } from "src/app/helpers/mattable.state";
 import { Quiz } from "src/app/models/quiz";
 import { QuizService } from "src/app/services/quiz.service";
 import { StateService } from "src/app/services/state.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'quiz-list',
@@ -28,6 +29,7 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(
         private quizService: QuizService,
         private stateService: StateService,
+        private router: Router,
         public snackBar: MatSnackBar
     ){
         this.state = this.stateService.quizListState;
@@ -66,5 +68,9 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy(): void {
         this.snackBar.dismiss();
+    }
+
+    openQuiz(firstQuestionId: number): void {
+        this.router.navigate(['/question/' + firstQuestionId]);
     }
 }

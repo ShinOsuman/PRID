@@ -19,6 +19,7 @@ import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { fr } from 'date-fns/locale';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
 import { QuizListComponent } from '../components/quizzes/quiz-list.component';
+import { QuestionComponent } from '../components/question/question.component';
 
 
 
@@ -34,7 +35,8 @@ import { QuizListComponent } from '../components/quizzes/quiz-list.component';
     HomeComponent,
     SetFocusDirective,
     QuizzesComponent,
-    QuizListComponent
+    QuizListComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

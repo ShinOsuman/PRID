@@ -29,7 +29,7 @@
                 <ng-container matColumnDef="Actions">
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let row">
-                        <button *ngIf="row.status != 'CLOTURE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip">
+                        <button *ngIf="row.status != 'CLOTURE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
                             <mat-icon *ngIf="row.status == 'EN_COURS'">edit</mat-icon>
                             <mat-icon *ngIf="row.status == 'FINI'">book</mat-icon>
                             <mat-icon *ngIf="row.status == 'PAS_COMMENCE'">add_box</mat-icon>

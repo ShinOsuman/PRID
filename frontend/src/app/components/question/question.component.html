@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <button>
+            <mat-icon>arrow_left</mat-icon>
+        </button>
+        <button>
+            <mat-icon>arrow_right</mat-icon>
+        </button>
+    </div>
+    <h2>{{question?.quiz?.name}} - Exercice {{question?.order}}</h2>
+    <button>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<div class="text-primary fs-4">
+    {{question?.body}}
+</div>
+<div>
+    Votre requête : {{question?.answerStatus}}
+</div>

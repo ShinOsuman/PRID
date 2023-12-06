@@ -7,6 +7,7 @@ import { AuthGuard } from '../services/auth.guard';
 import { Role } from '../models/user';
 import { HomeComponent } from '../components/home/home.component';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
+import { QuestionComponent } from '../components/question/question.component';
 
 
 const appRoutes: Routes = [
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
   },
   { path: 'quizzes', component: QuizzesComponent, canActivate: [AuthGuard], data: { roles: [Role.Student]} },
   { path: 'restricted', component: RestrictedComponent },
-  { path: '**', component: UnknownComponent },
+  { path: 'question/:id', component: QuestionComponent, canActivate: [AuthGuard]},
+  { path: '**', component: UnknownComponent }
 ];
 
 export const AppRoutes = RouterModule.forRoot(appRoutes);
