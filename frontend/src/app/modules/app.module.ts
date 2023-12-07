@@ -20,6 +20,7 @@ import { fr } from 'date-fns/locale';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
 import { QuizListComponent } from '../components/quizzes/quiz-list.component';
 import { QuestionComponent } from '../components/question/question.component';
+import { CodeEditorComponent } from '../components/code-editor/code-editor.component';
 
 
 
@@ -36,7 +37,8 @@ import { QuestionComponent } from '../components/question/question.component';
     SetFocusDirective,
     QuizzesComponent,
     QuizListComponent,
-    QuestionComponent
+    QuestionComponent,
+    CodeEditorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

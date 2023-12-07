@@ -20,7 +20,12 @@ public class Question {
     }
     [NotMapped]
     public string AnswerStatus { get; set; } = "";
-    
+    [NotMapped]
+    public string Answer { get; set; } = "";
+    [NotMapped]
+    public int PreviousQuestion { get; set; } = 0;
+    [NotMapped]
+    public int NextQuestion { get; set; } = 0;
 }
 
 public class QuestionDto {
@@ -31,5 +36,7 @@ public class QuestionDto {
     public string QuizName { get; set; } = "";
     public QuizDTO Quiz { get; set; } = null!;
     public string AnswerStatus { get; set; } = "";
-
+    public string Answer { get; set; } = "";
+    public int PreviousQuestion { get; set; } = 0;
+    public int NextQuestion { get; set; } = 0;
 }

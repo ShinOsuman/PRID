@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between">
     <div>
-        <button>
+        <button [disabled]="question?.previousButtonDisabled" (click)="goToPreviousQuestion()">
             <mat-icon>arrow_left</mat-icon>
         </button>
-        <button>
+        <button [disabled]="question?.nextButtonDisabled" (click)="goToNextQuestion()">
             <mat-icon>arrow_right</mat-icon>
         </button>
     </div>
@@ -17,4 +17,10 @@
 </div>
 <div>
     Votre requête : {{question?.answerStatus}}
+</div>
+<code-editor #editor [(ngModel)]="query" [readOnly]="false"></code-editor>
+<div>
+    <button>Envoyer</button>
+    <button>Effacer</button>
+    <Button>Voir solutions</Button>
 </div>

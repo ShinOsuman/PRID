@@ -9,8 +9,19 @@ export class Question {
     @Type(() => Quiz)
     quiz?: Quiz;
     answerStatus? : string;
-    
+    answer? : string;
+    previousQuestion?: number;
+    nextQuestion?: number;
+
     get quizName(): string {
         return this.quiz ? this.quiz.name || 'N/A' : 'N/A';
+    }
+
+    get previousButtonDisabled(): boolean {
+        return this.previousQuestion == 0;
+    }
+
+    get nextButtonDisabled(): boolean {
+        return this.nextQuestion == 0;
     }
 }
