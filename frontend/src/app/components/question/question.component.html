@@ -7,7 +7,7 @@
             <mat-icon>arrow_right</mat-icon>
         </button>
     </div>
-    <h2>{{question?.quiz?.name}} - Exercice {{question?.order}}</h2>
+    <h2>{{question?.quizName}} - Exercice {{question?.order}}</h2>
     <button>
         <mat-icon>close</mat-icon>
     </button>
@@ -20,7 +20,7 @@
 </div>
 <code-editor #editor [(ngModel)]="query" [readOnly]="false"></code-editor>
 <div>
-    <button>Envoyer</button>
+    <button [disabled]="query==previousQuery">Envoyer</button>
     <button>Effacer</button>
     <Button>Voir solutions</Button>
 </div>

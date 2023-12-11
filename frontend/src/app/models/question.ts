@@ -12,6 +12,7 @@ export class Question {
     answer? : string;
     previousQuestion?: number;
     nextQuestion?: number;
+    sendButtonDisabled?: boolean = true;
 
     get quizName(): string {
         return this.quiz ? this.quiz.name || 'N/A' : 'N/A';
@@ -24,4 +25,5 @@ export class Question {
     get nextButtonDisabled(): boolean {
         return this.nextQuestion == 0;
     }
+
 }
