@@ -21,6 +21,10 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this._query = value;
     }
 
+    get dbName(){
+        return this.question?.quiz?.database?.name ?? '';
+  }
+
 
     constructor(
         private questionService: QuestionService,

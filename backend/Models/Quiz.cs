@@ -69,10 +69,5 @@ public class QuizDTO
     public string Status { get; set ; } = "";
     public string Evaluation { get; set; } = "N/A";
     public int FirstQuestionId { get; set; }
-}
-
-public class TrainingWithDatabaseDto : QuizDTO
-{
     public DatabaseDto Database { get; set; } = null!;
-    
 }

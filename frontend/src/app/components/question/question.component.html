@@ -18,7 +18,7 @@
 <div>
     Votre requête : {{question?.answerStatus}}
 </div>
-<code-editor #editor [(ngModel)]="query" [readOnly]="false"></code-editor>
+<code-editor #editor [(ngModel)]="query" [readOnly]="false" [database]="dbName"></code-editor>
 <div>
     <button [disabled]="query==previousQuery">Envoyer</button>
     <button>Effacer</button>

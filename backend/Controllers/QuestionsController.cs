@@ -28,7 +28,8 @@ public class QuestionsController : ControllerBase
             return BadRequest();
         }
         //récupération de la question
-        var question = await _context.Questions.Include(q => q.Quiz).SingleOrDefaultAsync(q => q.Id == id);
+        var question = await _context.Questions.Include(q => q.Quiz)
+                                                .ThenInclude(q => q.Database).SingleOrDefaultAsync(q => q.Id == id);
         if (question == null){
             return NotFound();
         }

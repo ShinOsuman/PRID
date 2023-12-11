@@ -26,9 +26,6 @@ public class MappingProfile : Profile
         CreateMap<Quiz, QuizDTO>();
         CreateMap<QuizDTO, Quiz>();
 
-        CreateMap<Quiz, TrainingWithDatabaseDto>();
-        CreateMap<TrainingWithDatabaseDto, Quiz>();
-
         CreateMap<Database, DatabaseDto>();
         CreateMap<DatabaseDto, Database>();
 

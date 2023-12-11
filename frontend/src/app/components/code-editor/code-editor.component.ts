@@ -52,6 +52,8 @@ export class CodeEditorComponent implements AfterViewInit, ControlValueAccessor 
     // contient la fonction de callback qui sera appelée quand la valeur de l'éditeur change
     private _onChange: any;
 
+    @Input() database?: string;
+
     ngAfterViewInit(): void {
         ace.config.set("fontSize", "1.5rem");
         this._aceEditor = ace.edit(this._editor.nativeElement);
@@ -75,7 +77,7 @@ export class CodeEditorComponent implements AfterViewInit, ControlValueAccessor 
         this._aceEditor.setValue(this._code, -1);
         this._aceEditor.resize();
         // Configuration de la complétion automatique
-        ace.config.loadModule("ace/ext/language_tools", function () {
+        ace.config.loadModule("ace/ext/language_tools", () => {
             const langTools = ace.require("ace/ext/language_tools");
             langTools.addCompleter({
                 getCompletions: (editor:any, session: any, pos: any, prefix: any, callback: any) => {
@@ -86,8 +88,8 @@ export class CodeEditorComponent implements AfterViewInit, ControlValueAccessor 
                     }
 
                     // Récupère les noms des tables, des colonnes et des mots-clés.
-                    const tables = CodeEditorComponent.getTableNames();
-                    const columns = CodeEditorComponent.getColumnNames();
+                    const tables = CodeEditorComponent.getTableNames(this.database ?? '');
+                    const columns = CodeEditorComponent.getColumnNames(this.database ?? '');
                     const keywords = CodeEditorComponent.getKeywords();
 
                     // Crée un tableau pour stocker les différents types de complétions.
@@ -115,13 +117,17 @@ export class CodeEditorComponent implements AfterViewInit, ControlValueAccessor 
         });
     }
 
-    /**
-     * Renvoie un tableau contenant les noms des tables SQL a afficher dans la complétion.
-     * 
-     * **TODO: Ici, géré de manière statique, mais devrait être dynamique en fonction de la BD ciblée.**
-     */
-    private static getTableNames() {
-        return ["SPJ", "S", "P", "J"];
+     //Renvoie un tableau contenant les noms des tables SQL a afficher dans la complétion.
+
+    private static getTableNames(db: string): string[] {
+        switch (db) {
+            case "fournisseurs":
+                return ["SPJ", "S", "P", "J"];
+            case "facebook":
+                return ["estami", "personne", "message", "destinataire"];
+            default:
+                return [];
+        }
     }
 
     /**
@@ -129,8 +135,15 @@ export class CodeEditorComponent implements AfterViewInit, ControlValueAccessor 
      * 
      * **TODO: Ici, géré de manière statique, mais devrait être dynamique en fonction de la BD ciblée.**
      */
-    private static getColumnNames() {
-        return ["ID_S", "ID_P", "ID_J", "PNAME", "COLOR", "CITY", "JNAME", "SNAME", "STATUS", "WEIGHT", "QTY", "DATE_DERNIERE_LIVRAISON"];
+    private static getColumnNames(db: string): string[] {
+        switch (db) {
+            case "fournisseurs":
+                return ["ID_S", "ID_P", "ID_J", "PNAME", "COLOR", "CITY", "JNAME", "SNAME", "STATUS", "WEIGHT", "QTY", "DATE_DERNIERE_LIVRAISON"];
+            case "facebook":
+                return ["ID_Message", "Destinataire", "SSN1", "SSN2", "Contenu", "Date_Expedition", "Expediteur", "SSN", "Nom", "Sexe", "Age"];
+            default:
+                return [];
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ public class QuizzesController : ControllerBase
     }
 
     [HttpGet("trainingQuizzes")]
-    public async Task<ActionResult<IEnumerable<TrainingWithDatabaseDto>>> GetTrainings() {
+    public async Task<ActionResult<IEnumerable<QuizDTO>>> GetTrainings() {
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
         if(user == null){
@@ -36,11 +36,11 @@ public class QuizzesController : ControllerBase
         foreach(var q in quizzes){
             q.Status = q.GetStatus(user);
         }
-        return _mapper.Map<List<TrainingWithDatabaseDto>>(quizzes);
+        return _mapper.Map<List<QuizDTO>>(quizzes);
     }
 
     [HttpGet("testQuizzes")]
-    public async Task<ActionResult<IEnumerable<TrainingWithDatabaseDto>>> GetTests() {
+    public async Task<ActionResult<IEnumerable<QuizDTO>>> GetTests() {
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
         if(user == null){
@@ -63,7 +63,7 @@ public class QuizzesController : ControllerBase
             }
             
         }
-        return _mapper.Map<List<TrainingWithDatabaseDto>>(quizzes);
+        return _mapper.Map<List<QuizDTO>>(quizzes);
     }
 
 
