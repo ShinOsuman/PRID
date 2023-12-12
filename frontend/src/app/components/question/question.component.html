@@ -22,5 +22,5 @@
 <div>
     <button [disabled]="query==previousQuery">Envoyer</button>
     <button>Effacer</button>
-    <Button>Voir solutions</Button>
+    <Button *ngIf="!isTest()">Voir solutions</Button>
 </div>

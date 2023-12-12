@@ -66,4 +66,8 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
             this.router.navigate(['/question/' + this.question.nextQuestion]).then(() => { this.refresh(); });
         }
     }
+
+    isTest(): boolean {
+        return this.question?.isTest ?? false;
+    }
 }

@@ -26,4 +26,8 @@ export class Question {
         return this.nextQuestion == 0;
     }
 
+    get isTest(): boolean {
+        return this.quiz?.isTest ?? false;
+    }
+
 }

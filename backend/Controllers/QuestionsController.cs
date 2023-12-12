@@ -34,7 +34,7 @@ public class QuestionsController : ControllerBase
             return NotFound();
         }
         //récupération de la réponse de l'utilisateur
-        var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id).OrderBy(a => a.Id).LastAsync();
+        var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
         if(attempt != null){
             var answer = await _context.Answers.Where(a => a.AttemptId == attempt.Id && a.QuestionId == question.Id).SingleOrDefaultAsync();
             if(answer == null){
