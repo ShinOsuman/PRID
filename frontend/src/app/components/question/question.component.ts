@@ -19,11 +19,19 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     }
     set query(value: string) {
         this._query = value;
+        this.deleteActivated = this.query != '';
     }
 
     get dbName(){
         return this.question?.quiz?.database?.name ?? '';
-  }
+    }
+    private _deleteActivated: boolean = false;
+    get deleteActivated(){
+        return this._deleteActivated;
+    }
+    set deleteActivated(value: boolean) {
+        this._deleteActivated = value;
+    }
 
 
     constructor(
