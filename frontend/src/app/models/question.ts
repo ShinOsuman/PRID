@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { Quiz } from './quiz';
+import { Solution } from './solution';
 
 export class Question {
     id?: number;
@@ -13,6 +14,7 @@ export class Question {
     previousQuestion?: number;
     nextQuestion?: number;
     sendButtonDisabled?: boolean = true;
+    solutions?: Solution[];
 
     get quizName(): string {
         return this.quiz ? this.quiz.name || 'N/A' : 'N/A';

@@ -39,4 +39,5 @@ public class QuestionDto {
     public string Answer { get; set; } = "";
     public int PreviousQuestion { get; set; } = 0;
     public int NextQuestion { get; set; } = 0;
+    public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
 }

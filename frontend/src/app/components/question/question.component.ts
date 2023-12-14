@@ -33,6 +33,14 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this._deleteActivated = value;
     }
 
+    private _solutionsDisabled = true;
+    get solutionsDisabled(){
+        return this._solutionsDisabled;
+    }
+    set solutionsDisabled(value: boolean) {
+        this._solutionsDisabled = value;
+    }
+
 
     constructor(
         private questionService: QuestionService,
@@ -60,6 +68,7 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
             this.question = question;
             this.query = question?.answer ?? '';
             this.previousQuery = this.query;
+            this.solutionsDisabled = true;
         })
     }
 
@@ -81,5 +90,9 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
 
     delete() {
         this.query = '';
+    }
+
+    showSolutions(){
+        this.solutionsDisabled = false;
     }
 }
