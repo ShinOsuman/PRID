@@ -78,4 +78,8 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     isTest(): boolean {
         return this.question?.isTest ?? false;
     }
+
+    delete() {
+        this.query = '';
+    }
 }

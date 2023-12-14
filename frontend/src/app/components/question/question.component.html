@@ -21,6 +21,6 @@
 <code-editor #editor [(ngModel)]="query" [readOnly]="false" [database]="dbName"></code-editor>
 <div>
     <button [disabled]="query==previousQuery || query ==''">Envoyer</button>
-    <button [disabled]="!deleteActivated">Effacer</button>
+    <button [disabled]="!deleteActivated" (click)="delete()">Effacer</button>
     <Button *ngIf="!isTest()">Voir solutions</Button>
 </div>

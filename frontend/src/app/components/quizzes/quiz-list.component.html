@@ -35,7 +35,7 @@
                             <mat-icon *ngIf="row.status == 'PAS_COMMENCE'">add_box</mat-icon>
                         </button>
                         <span *ngIf="row.status == 'FINI' && !row.isTest">
-                            <button mat-icon-button tabindex="-1">
+                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'">
                                 <mat-icon>add_box</mat-icon>
                             </button>
                         </span>
