@@ -24,6 +24,9 @@
     <button [disabled]="!deleteActivated" (click)="delete()">Effacer</button>
     <Button *ngIf="!isTest()" (click)="showSolutions()">Voir solutions</Button>
 </div>
+<div *ngIf="question?.answer">
+    {{question?.answer?.getTimeStamp}}
+</div>
 <div *ngIf="query">
     <div class="text-danger" *ngIf="queryHasErrors()">
         <div>Erreur de requête</div>
