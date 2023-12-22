@@ -37,5 +37,8 @@ public class MappingProfile : Profile
 
         CreateMap<Solution, SolutionDto>();
         CreateMap<SolutionDto, Solution>();
+
+        CreateMap<Answer, AnswerDto>();
+        CreateMap<AnswerDto, Answer>();
     }
 }

@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import { Quiz } from './quiz';
 import { Solution } from './solution';
+import { Answer } from './answer';
 
 export class Question {
     id?: number;
@@ -10,7 +11,8 @@ export class Question {
     @Type(() => Quiz)
     quiz?: Quiz;
     answerStatus? : string;
-    answer? : string;
+    @Type(() => Answer)
+    answer? : Answer;
     previousQuestion?: number;
     nextQuestion?: number;
     sendButtonDisabled?: boolean = true;

@@ -29,6 +29,7 @@ public class QuestionsController : ControllerBase
         }
         //récupération de la question
         var question = await _context.Questions.Include(q => q.Solutions)
+                                                .Include(q => q.Answers)
                                                 .Include(q => q.Quiz)
                                                 .ThenInclude(q => q.Database).SingleOrDefaultAsync(q => q.Id == id);
         if (question == null){
@@ -41,7 +42,7 @@ public class QuestionsController : ControllerBase
             if(answer == null){
                 question.AnswerStatus = "(pas encore répondu)";
             }else {
-                question.Answer = answer.Sql;
+                question.Answer = answer;
             }
         }
         //récupération de la question précédente

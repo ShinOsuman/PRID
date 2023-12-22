@@ -68,9 +68,13 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this.questionId = this.route.snapshot.params.id;
         this.questionService.getQuestion(this.questionId).subscribe(question => {
             this.question = question;
-            this.sql = question?.answer ?? '';
+            this.sql = question?.answer?.sql ?? '';
             this.solutionsDisabled = true;
-            this.query = undefined;
+            if(this.question.answer){
+                this.sendAction();
+            }else {
+                this.query = undefined;
+            }
         })
     }
 
@@ -101,7 +105,6 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     sendAction(){
         this.questionService.evaluate(this.questionId, this.sql).subscribe(query => {
             this.query = query;
-            console.log(query);
             if (!this.queryHasErrors()){
                 this.solutionsDisabled = false;
             }else {
