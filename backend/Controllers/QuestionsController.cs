@@ -57,4 +57,23 @@ public class QuestionsController : ControllerBase
 
         return _mapper.Map<QuestionDto>(question);
     }
+    [HttpPost("evaluate")]
+    public async Task<ActionResult<Query>> Evaluate(EvalDto answer) {
+        var question = await _context.Questions.Include(q => q.Solutions).Include(q => q.Quiz).ThenInclude(q => q.Database).Where(q => q.Id == answer.QuestionId).SingleOrDefaultAsync();
+        //récupération de la question
+        if(question == null){
+            return BadRequest();
+        }
+        //récupération de la db
+        var db = await _context.Databases.Where(d => d.Id==question.Quiz.DatabaseId).SingleOrDefaultAsync();
+        if(db == null){
+            return BadRequest();
+        }
+        //création de la query
+        Query query = new Query(answer.Sql, db.Name);
+        query.Solutions = _mapper.Map<ICollection<SolutionDto>>(question.Solutions);
+        query.GetCompare(db.Name);
+        return query;
+    }
+    
 }

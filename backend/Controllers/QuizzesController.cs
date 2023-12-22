@@ -55,7 +55,7 @@ public class QuizzesController : ControllerBase
                                     .ToListAsync();
         foreach(var q in quizzes){
             q.Status = q.GetTestStatus(user);
-            var attempt = await _context.Attempts.SingleOrDefaultAsync(a => a.QuizId == q.Id && a.StudentId == user.Id);
+            var attempt = await _context.Attempts.Where(a => a.QuizId == q.Id && a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
             if(attempt != null){
                 int CorrectAnswers = _context.Answers.Where(a => a.AttemptId == attempt.Id && a.IsCorrect).Count();
                 int QuestionsCount = _context.Questions.Where(question => question.QuizId == q.Id).Count();

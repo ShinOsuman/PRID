@@ -3,6 +3,7 @@ import { Observable, map } from "rxjs";
 import { plainToInstance } from "class-transformer";
 import { HttpClient } from "@angular/common/http";
 import { Question } from "../models/question";
+import { Query } from "../models/query";
 
 
 @Injectable({providedIn:'root'})
@@ -15,5 +16,10 @@ export class QuestionService {
         );
     }
 
+    evaluate(questionId: number, sql: string ): Observable<Query> {
+        return this.http.post<any>(`${this.baseUrl}api/Questions/evaluate`, { questionId, sql}).pipe(
+            map(res => plainToInstance(Query, res))
+        );
+    }
 
 }

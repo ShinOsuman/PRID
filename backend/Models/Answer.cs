@@ -13,3 +13,9 @@ public class Answer {
     public Attempt Attempt { get; set; } = null!;
     public int AttemptId { get; set; }
 }
+
+public class EvalDto {
+    public string Sql { get; set; } = "";
+    public int QuestionId { get; set; }
+
+}

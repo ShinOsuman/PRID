@@ -3,23 +3,25 @@ import { QuestionService } from "src/app/services/question.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Question } from "src/app/models/question";
+import { Query } from "src/app/models/query";
 
 
 @Component({
-    templateUrl: 'question.component.html'
+    templateUrl: 'question.component.html',
+    styleUrls: ['./question.component.css']
 })
 
 export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     questionId!: number;
     question?: Question;
-    previousQuery: string = "";
-    private _query: string = '';
-    get query(){
-        return this._query;
+    query?: Query;
+    private _sql: string = '';
+    get sql(){
+        return this._sql;
     }
-    set query(value: string) {
-        this._query = value;
-        this.deleteActivated = this.query != '';
+    set sql(value: string) {
+        this._sql = value;
+        this.deleteActivated = this.sql != '';
     }
 
     get dbName(){
@@ -66,9 +68,9 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this.questionId = this.route.snapshot.params.id;
         this.questionService.getQuestion(this.questionId).subscribe(question => {
             this.question = question;
-            this.query = question?.answer ?? '';
-            this.previousQuery = this.query;
+            this.sql = question?.answer ?? '';
             this.solutionsDisabled = true;
+            this.query = undefined;
         })
     }
 
@@ -89,10 +91,34 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     delete() {
-        this.query = '';
+        this.sql = '';
     }
 
     showSolutions(){
         this.solutionsDisabled = false;
+    }
+
+    sendAction(){
+        this.questionService.evaluate(this.questionId, this.sql).subscribe(query => {
+            this.query = query;
+            console.log(query);
+            if (!this.queryHasErrors()){
+                this.solutionsDisabled = false;
+            }else {
+                this.solutionsDisabled = true;
+            }
+        });
+    }
+
+    queryHasErrors(): boolean {
+        return (this.query?.comments?.length ?? 0) > 0;
+    }
+
+    queryHasData(): boolean {
+        return (this.query?.data?.length ?? 0) > 0;
+    }
+    
+    queryHasColLineErrors(){
+        return this.query?.badResults?.length ?? 0 > 0;
     }
 }
