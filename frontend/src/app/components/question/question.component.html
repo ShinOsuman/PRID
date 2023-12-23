@@ -44,7 +44,9 @@
         <br>
     </div>
     <div class="text-success" *ngIf="!queryHasErrors() && !queryHasColLineErrors()">
-        Test
+        Votre requête a retourné une réponse correcte
+        <br><br>
+        <p>Néanmoins comparez votre solution avec celle(s) ci-dessous pour voir si vous n'avez pas eu un peu de chance... ;-&rpar;</p>
     </div>
     <div *ngIf="!queryHasErrors()">
         <p>{{query.rowCount}} ligne(s)</p>
