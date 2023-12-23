@@ -19,8 +19,8 @@
     Votre requête : {{question?.answerStatus}}
 </div>
 <code-editor #editor [(ngModel)]="sql" [readOnly]="false" [database]="dbName"></code-editor>
-<div>
-    <button (click)="sendAction()">Envoyer</button>
+<div *ngIf="buttonsDisabled()">
+    <button (click)="sendAction(false)">Envoyer</button>
     <button [disabled]="!deleteActivated" (click)="delete()">Effacer</button>
     <Button *ngIf="!isTest()" (click)="showSolutions()">Voir solutions</Button>
 </div>
@@ -65,7 +65,7 @@
         </table>
     </div>
 </div>
-<div *ngIf="!solutionsDisabled">
+<div *ngIf="!solutionsDisabled && !isTest()">
     <div class="fs-4 mt-5 mb-5" *ngFor="let solution of question?.solutions">
         <h1>Solution {{solution.order}}</h1>
         <div class="text-success"><pre>{{solution.sql}}</pre></div>

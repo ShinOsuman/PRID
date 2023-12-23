@@ -27,5 +27,6 @@ public class AnswerDto {
 public class EvalDto {
     public string Sql { get; set; } = "";
     public int QuestionId { get; set; }
+    public bool isDisplay { get; set; } = false;
 
 }

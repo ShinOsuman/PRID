@@ -71,7 +71,7 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
             this.sql = question?.answer?.sql ?? '';
             this.solutionsDisabled = true;
             if(this.question.answer){
-                this.sendAction();
+                this.sendAction(true);
             }else {
                 this.query = undefined;
             }
@@ -102,8 +102,8 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this.solutionsDisabled = false;
     }
 
-    sendAction(){
-        this.questionService.evaluate(this.questionId, this.sql).subscribe(query => {
+    sendAction(isDisplay: boolean){
+        this.questionService.evaluate(this.questionId, this.sql, isDisplay).subscribe(query => {
             this.query = query;
             if (!this.queryHasErrors()){
                 this.solutionsDisabled = false;
@@ -123,5 +123,12 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     
     queryHasColLineErrors(){
         return this.query?.badResults?.length ?? 0 > 0;
+    }
+
+    buttonsDisabled(): boolean {
+        if(this.question?.answer && this.question?.quiz?.isTest){
+            return false;
+        }
+        return true;
     }
 }

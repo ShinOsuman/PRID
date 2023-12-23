@@ -38,7 +38,7 @@ public class QuestionsController : ControllerBase
         //récupération de la réponse de l'utilisateur
         var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
         if(attempt != null){
-            var answer = await _context.Answers.Where(a => a.AttemptId == attempt.Id && a.QuestionId == question.Id).SingleOrDefaultAsync();
+            var answer = await _context.Answers.Where(a => a.AttemptId == attempt.Id && a.QuestionId == question.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
             if(answer == null){
                 question.AnswerStatus = "(pas encore répondu)";
             }else {
@@ -74,6 +74,42 @@ public class QuestionsController : ControllerBase
         Query query = new Query(answer.Sql, db.Name);
         query.Solutions = _mapper.Map<ICollection<SolutionDto>>(question.Solutions);
         query.GetCompare(db.Name);
+
+        if(!answer.isDisplay){
+            //récupération de l'utilisateur
+            var pseudo = User.Identity!.Name;
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+            if(user == null){
+                return BadRequest();
+            }
+            //récupération ou création de l'attempt
+            var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
+            if(attempt == null) {
+                attempt = new Attempt {
+                    QuizId = question.QuizId,
+                    StudentId = user.Id,
+                    Start = DateTime.Now
+                };
+                _context.Attempts.Add(attempt);
+            }
+
+            //création de la réponse
+            var answerDb = new Answer{
+                AttemptId = attempt.Id,
+                QuestionId = question.Id,
+                Question = question,
+                Attempt = attempt,
+                Sql = answer.Sql,
+                Timestamp = DateTime.Now,
+                IsCorrect = query.BadResults.Count == 0 && query.Comments.Count == 0
+            };
+            _context.Answers.Add(answerDb);
+            
+            await _context.SaveChangesAsync();
+        }
+
+        
+
         return query;
     }
     

@@ -16,8 +16,8 @@ export class QuestionService {
         );
     }
 
-    evaluate(questionId: number, sql: string ): Observable<Query> {
-        return this.http.post<any>(`${this.baseUrl}api/Questions/evaluate`, { questionId, sql}).pipe(
+    evaluate(questionId: number, sql: string, isDisplay: boolean ): Observable<Query> {
+        return this.http.post<any>(`${this.baseUrl}api/Questions/evaluate`, { questionId, sql, isDisplay }).pipe(
             map(res => plainToInstance(Query, res))
         );
     }

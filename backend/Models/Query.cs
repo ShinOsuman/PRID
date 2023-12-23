@@ -19,6 +19,11 @@ public class Query {
     public string[][] SolutionData { get; set; } = new string[0][];
     public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
     public ICollection<String> BadResults { get; set; } = new HashSet<String>();
+    public Boolean IsCorrect {
+        get {
+            return SolutionRowCount == RowCount && SolutionColumns.Length == Columns.Length;
+        }
+    }
     
 
 
