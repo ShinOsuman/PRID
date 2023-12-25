@@ -83,10 +83,11 @@ public class QuestionsController : ControllerBase
                 return BadRequest();
             }
             //récupération ou création de l'attempt
-            var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefaultAsync();
+            var attempt = await _context.Attempts.Where(a => a.QuizId == question.QuizId && a.StudentId == user.Id && a.Finish == null).OrderBy(a => a.Id).LastOrDefaultAsync();
             if(attempt == null) {
                 attempt = new Attempt {
                     QuizId = question.QuizId,
+                    Quiz = question.Quiz,
                     StudentId = user.Id,
                     Start = DateTime.Now
                 };
