@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Question } from "src/app/models/question";
 import { Query } from "src/app/models/query";
+import { MatDialog } from "@angular/material/dialog";
+import { QuizClotureComponent } from "../quiz-cloture/quiz-cloture.component";
 
 
 @Component({
@@ -48,7 +50,8 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         private questionService: QuestionService,
         private router: Router,
         private route: ActivatedRoute,
-        public snackBar: MatSnackBar
+        public snackBar: MatSnackBar,
+        public dialog: MatDialog
     ){
 
     }
@@ -130,5 +133,10 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
             return false;
         }
         return true;
+    }
+
+
+    clotureQuiz(){
+        this.dialog.open(QuizClotureComponent, {data: this.question?.quiz });
     }
 }
