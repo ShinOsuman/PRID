@@ -8,9 +8,13 @@
         </button>
     </div>
     <h2>{{question?.quizName}} - Exercice {{question?.order}}</h2>
-    <button [disabled]="clotureDisabled" (click)="clotureAttempt()">
-        <mat-icon>close</mat-icon>
-    </button>
+    <span *ngIf="clotureVisible" >
+        <button [disabled]="clotureDisabled" (click)="clotureAttempt()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </span>
+    <span *ngIf="!clotureVisible">
+    </span>
 </div>
 <div class="text-primary fs-4">
     {{question?.body}}
@@ -18,8 +22,8 @@
 <div>
     Votre requête : {{question?.answerStatus}}
 </div>
-<code-editor #editor [(ngModel)]="sql" [readOnly]="false" [database]="dbName"></code-editor>
-<div *ngIf="buttonsDisabled()">
+<code-editor #editor [(ngModel)]="sql" [readOnly]="!clotureVisible" [database]="dbName"></code-editor>
+<div *ngIf="buttonsDisabled() && clotureVisible">
     <button (click)="sendAction(false)">Envoyer</button>
     <button [disabled]="!deleteActivated" (click)="delete()">Effacer</button>
     <Button *ngIf="!isTest()" (click)="showSolutions()">Voir solutions</Button>

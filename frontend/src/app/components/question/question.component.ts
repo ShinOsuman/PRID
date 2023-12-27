@@ -56,6 +56,14 @@ export class QuestionComponent implements OnInit {
         this._clotureDisabled = value;
     }
 
+    private _clotureVisible = true;
+    get clotureVisible(){
+        return this._clotureVisible;
+    }
+    set clotureVisible(value: boolean) {
+        this._clotureVisible = value;
+    }
+
 
     constructor(
         private questionService: QuestionService,
@@ -91,7 +99,11 @@ export class QuestionComponent implements OnInit {
     getAttempt(): void {
         this.attemptService.getAttempt(this.question?.quiz?.id ?? 0).subscribe(attempt => {
             if(attempt){
+                this.attempt = attempt;
                 this._clotureDisabled = false;
+                this._clotureVisible = attempt.finish == null;
+            }else {
+                this.clotureVisible = true;
             }
         })
     }

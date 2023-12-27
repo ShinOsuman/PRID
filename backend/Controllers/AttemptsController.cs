@@ -34,7 +34,6 @@ public class AttemptsController : ControllerBase
         var quiz = await _context.Quizzes.Where(q => q.Id == quizDTO.Id)
                                         .Include(q => q.Attempts).SingleOrDefaultAsync();
         if(quiz == null){
-            Console.WriteLine("quiz null");
             return BadRequest();
         }
         //récupération de l'attempt
