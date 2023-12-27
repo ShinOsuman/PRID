@@ -83,8 +83,13 @@ export class QuestionComponent implements OnInit {
             }else {
                 this.query = undefined;
             }
-        })
-        this.attemptService.getAttempt(this.questionId).subscribe(attempt => {
+            this.getAttempt();
+            
+        }) 
+    }
+
+    getAttempt(): void {
+        this.attemptService.getAttempt(this.question?.quiz?.id ?? 0).subscribe(attempt => {
             if(attempt){
                 this._clotureDisabled = false;
             }
@@ -123,6 +128,7 @@ export class QuestionComponent implements OnInit {
             }else {
                 this.solutionsDisabled = true;
             }
+            this.getAttempt();
         });
     }
 

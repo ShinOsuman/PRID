@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
 using Microsoft.AspNetCore.Authorization;
-using Google.Protobuf.WellKnownTypes;
 
 namespace prid.Controllers;
 
@@ -24,6 +23,7 @@ public class AttemptsController : ControllerBase
     [Authorize]
     [HttpPost("getlastattempt")]
     public async Task<ActionResult<AttemptDto>> GetLastAttempt(QuizWithIdDto quizDTO){
+        Console.WriteLine("id recu: " + quizDTO.Id);
         //récupération de l'utilisateur
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
@@ -34,6 +34,7 @@ public class AttemptsController : ControllerBase
         var quiz = await _context.Quizzes.Where(q => q.Id == quizDTO.Id)
                                         .Include(q => q.Attempts).SingleOrDefaultAsync();
         if(quiz == null){
+            Console.WriteLine("quiz null");
             return BadRequest();
         }
         //récupération de l'attempt
