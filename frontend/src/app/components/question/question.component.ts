@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { QuestionService } from "src/app/services/question.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -6,6 +6,8 @@ import { Question } from "src/app/models/question";
 import { Query } from "src/app/models/query";
 import { MatDialog } from "@angular/material/dialog";
 import { QuizClotureComponent } from "../quiz-cloture/quiz-cloture.component";
+import { AttemptService } from "src/app/services/attempt.service";
+import { Attempt } from "src/app/models/attempt";
 
 
 @Component({
@@ -13,9 +15,10 @@ import { QuizClotureComponent } from "../quiz-cloture/quiz-cloture.component";
     styleUrls: ['./question.component.css']
 })
 
-export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
+export class QuestionComponent implements OnInit {
     questionId!: number;
     question?: Question;
+    attempt?: Attempt;
     query?: Query;
     private _sql: string = '';
     get sql(){
@@ -45,9 +48,18 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this._solutionsDisabled = value;
     }
 
+    private _clotureDisabled = true;
+    get clotureDisabled(){
+        return this._clotureDisabled;
+    }
+    set clotureDisabled(value: boolean) {
+        this._clotureDisabled = value;
+    }
+
 
     constructor(
         private questionService: QuestionService,
+        private attemptService: AttemptService,
         private router: Router,
         private route: ActivatedRoute,
         public snackBar: MatSnackBar,
@@ -60,13 +72,6 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
         this.refresh();
     }
 
-    ngAfterViewInit(): void {
-    }
-
-    ngOnDestroy(): void {
-        
-    }
-
     refresh(): void {
         this.questionId = this.route.snapshot.params.id;
         this.questionService.getQuestion(this.questionId).subscribe(question => {
@@ -77,6 +82,11 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
                 this.sendAction(true);
             }else {
                 this.query = undefined;
+            }
+        })
+        this.attemptService.getAttempt(this.questionId).subscribe(attempt => {
+            if(attempt){
+                this._clotureDisabled = false;
             }
         })
     }
@@ -136,7 +146,14 @@ export class QuestionComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
 
-    clotureQuiz(){
-        this.dialog.open(QuizClotureComponent, {data: this.question?.quiz });
+    clotureAttempt(){
+        const dlg = this.dialog.open(QuizClotureComponent);
+        dlg.beforeClosed().subscribe(result => {
+            if(result){
+                this.attemptService.clotureAttempt(this.question?.quiz?.id ?? 0).subscribe(res =>
+                    this.router.navigate(['/quizzes'])
+                );
+            }
+        })
     }
 }

@@ -71,3 +71,7 @@ public class QuizDTO
     public int FirstQuestionId { get; set; }
     public DatabaseDto Database { get; set; } = null!;
 }
+
+public class QuizWithIdDto {
+    public int Id { get; set; }
+}

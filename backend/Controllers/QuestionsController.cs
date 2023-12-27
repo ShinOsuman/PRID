@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
 using Microsoft.AspNetCore.Authorization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace prid.Controllers;
 

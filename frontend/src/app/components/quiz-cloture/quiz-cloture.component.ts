@@ -1,24 +1,26 @@
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Quiz } from 'src/app/models/quiz';
-import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+
 
 @Component({
     templateUrl: 'quiz-cloture.component.html'
 })
 
 export class QuizClotureComponent {
+
     constructor(
         public dialogRef: MatDialogRef<QuizClotureComponent>,
-        private router: Router,
-        @Inject(MAT_DIALOG_DATA) public data: {quiz: Quiz}) { }
+    )
+    {
+        
+    }
+
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(false);
     }
 
     onYesClick(): void {
-        this.dialogRef.close();
-        this.router.navigate(['/quizzes']);
+        this.dialogRef.close(true);
     }
 }

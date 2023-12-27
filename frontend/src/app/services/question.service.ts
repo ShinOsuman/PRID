@@ -21,5 +21,4 @@ export class QuestionService {
             map(res => plainToInstance(Query, res))
         );
     }
-
 }
