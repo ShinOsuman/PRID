@@ -69,7 +69,7 @@
         </table>
     </div>
 </div>
-<div *ngIf="!solutionsDisabled && !isTest()">
+<div *ngIf="!solutionsDisabled">
     <div class="fs-4 mt-5 mb-5" *ngFor="let solution of question?.solutions">
         <h1>Solution {{solution.order}}</h1>
         <div class="text-success"><pre>{{solution.sql}}</pre></div>
