@@ -10,7 +10,7 @@ public class Quiz
     public string Name { get; set; } = "";
     public string? Description { get; set; }
     public bool IsPublished { get; set; } = false;
-    public bool IsClosed { get; set; } = true;
+    public bool IsClosed { get; set; } = false;
     public bool IsTest { get; set; } = false;
     public DateTimeOffset? StartDate { get; set; }
     public DateTimeOffset? EndDate { get; set; }

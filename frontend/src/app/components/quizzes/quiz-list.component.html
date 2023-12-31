@@ -12,11 +12,11 @@
                 </ng-container>
                 <ng-container matColumnDef="Type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-                    <td mat-cell *matCellDef="let row">a faire</td>
+                    <td mat-cell *matCellDef="let row">{{row.quizType}}</td>
                 </ng-container>
                 <ng-container matColumnDef="TeacherStatut">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Durée</th>
-                    <td mat-cell *matCellDef="let row">a faire</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                    <td mat-cell *matCellDef="let row">{{row.quizStatus}}</td>
                 </ng-container>
                 <ng-container matColumnDef="Date début">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de début</th>

@@ -38,4 +38,23 @@ export class Quiz {
         }
         return "";
     }
+
+    get quizType(): string {
+        if(this.isTest){
+            return "Test";
+        }else{
+            return "Training";
+        }
+    }
+
+    get quizStatus(): string {
+        if(this.isPublished){
+            if(this.isClosed){
+                return "CLOTURE";
+            }else {
+                return "PUBLIE";
+            }
+        }
+        return "PAS_PUBLIE";
+    }
 }
