@@ -21,7 +21,7 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     state: MatTableState;
     filter: string = '';
 
-    @Input() quizType: 'test' | 'training' = 'test';
+    @Input() quizType: 'test' | 'training' | 'teacher' = 'test';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -34,11 +34,15 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     ){
         this.state = this.stateService.quizListState;
     }
-    
-    ngOnInit(): void {
-        this.displayedColumns = this.quizType === 'test'
-        ? ['Nom', 'Base de données', 'Date début', 'Date fin', 'Statut', 'Evaluation', 'Actions']
-        : ['Nom', 'Base de données', 'Statut', 'Actions']
+
+    ngOnInit():void{
+        if(this.quizType === 'teacher'){
+          this.displayedColumns = ['Nom', 'Base de données','Type', 'TeacherStatut', 'Date début', 'Date fin', 'Actions'];
+        }else if(this.quizType === 'training'){
+          this.displayedColumns = ['Nom', 'Base de données', 'Statut', 'Actions'];
+        }else{
+          this.displayedColumns = ['Nom', 'Base de données', 'Date début', 'Date fin', 'Statut', 'Evaluation', 'Actions'];
+        }
     }
 
     ngAfterViewInit(): void {
@@ -57,8 +61,14 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
                 this.state.restoreState(this.dataSource);
                 this.filter=this.state.filter;
             })
-        }else {
+        }else if(this.quizType === 'test') {
             this.quizService.getTests().subscribe(quizzes => {
+                this.dataSource.data = quizzes;
+                this.state.restoreState(this.dataSource);
+                this.filter=this.state.filter;
+            })
+        }else {
+            this.quizService.getQuizzes().subscribe(quizzes => {
                 this.dataSource.data = quizzes;
                 this.state.restoreState(this.dataSource);
                 this.filter=this.state.filter;
@@ -72,5 +82,9 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
 
     openQuiz(firstQuestionId: number): void {
         this.router.navigate(['/question/' + firstQuestionId]);
+    }
+
+    editQuiz(id: number): void {
+        //TODO
     }
 }

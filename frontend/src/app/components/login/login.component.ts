@@ -71,7 +71,11 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 // si login est ok, on navigue vers la page demandée
                 next: data => {
-                    this.router.navigate(['/quizzes']);
+                    if(this.authenticationService.currentUser?.roleAsString == 'Teacher'){
+                        this.router.navigate(['/teacher']);
+                    }else {
+                        this.router.navigate(['/quizzes']);
+                    }
                 },
                 // en cas d'erreurs, on reste sur la page et on les affiche
                 error: error => {

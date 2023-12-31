@@ -10,6 +10,14 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Base de données</th>
                     <td mat-cell *matCellDef="let row">{{row.database.name}}</td>
                 </ng-container>
+                <ng-container matColumnDef="Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+                    <td mat-cell *matCellDef="let row">a faire</td>
+                </ng-container>
+                <ng-container matColumnDef="TeacherStatut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Durée</th>
+                    <td mat-cell *matCellDef="let row">a faire</td>
+                </ng-container>
                 <ng-container matColumnDef="Date début">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de début</th>
                     <td mat-cell *matCellDef="let row">{{row.testStartDate}}</td>
@@ -29,6 +37,9 @@
                 <ng-container matColumnDef="Actions">
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let row">
+                        <button *ngIf="row.status == 'teacher'" mat-icon-button tabindex="-1" [matTooltip]="'modifier'" (click)="editQuiz(row.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
                         <button *ngIf="row.status != 'CLOTURE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
                             <mat-icon *ngIf="row.status == 'EN_COURS'">edit</mat-icon>
                             <mat-icon *ngIf="row.status == 'FINI'">book</mat-icon>

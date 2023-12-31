@@ -22,6 +22,7 @@ import { QuizListComponent } from '../components/quizzes/quiz-list.component';
 import { QuestionComponent } from '../components/question/question.component';
 import { CodeEditorComponent } from '../components/code-editor/code-editor.component';
 import { QuizClotureComponent } from '../components/quiz-cloture/quiz-cloture.component';
+import { TeacherComponent } from '../components/teacher/teacher.component';
 
 
 
@@ -40,7 +41,8 @@ import { QuizClotureComponent } from '../components/quiz-cloture/quiz-cloture.co
     QuizListComponent,
     QuestionComponent,
     CodeEditorComponent,
-    QuizClotureComponent
+    QuizClotureComponent,
+    TeacherComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

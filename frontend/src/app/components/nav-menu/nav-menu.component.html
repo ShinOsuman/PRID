@@ -24,6 +24,9 @@
                     <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="currentUser && !isTeacher">
                         <a class="nav-link text-dark" [routerLink]="['/quizzes']">Liste des quiz</a>
                     </li>
+                    <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="currentUser && isTeacher">
+                        <a class="nav-link text-dark" [routerLink]="['/teacher']">Gestion des quiz</a>
+                    </li>
                     <li class="nav-item" *ngIf="currentUser">
                         <a class="nav-link text-dark" [routerLink]='[]' (click)='logout()'>
                             <span class="material-icons">power_settings_new</span>

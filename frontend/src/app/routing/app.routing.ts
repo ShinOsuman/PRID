@@ -8,6 +8,7 @@ import { Role } from '../models/user';
 import { HomeComponent } from '../components/home/home.component';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
 import { QuestionComponent } from '../components/question/question.component';
+import { TeacherComponent } from '../components/teacher/teacher.component';
 
 
 const appRoutes: Routes = [
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
       path: 'login',
       component: LoginComponent
   },
+  { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: [Role.Teacher]} },
   { path: 'quizzes', component: QuizzesComponent, canActivate: [AuthGuard], data: { roles: [Role.Student]} },
   { path: 'restricted', component: RestrictedComponent },
   { path: 'question/:id', component: QuestionComponent, canActivate: [AuthGuard]},

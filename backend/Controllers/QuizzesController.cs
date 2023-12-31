@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
 using Microsoft.AspNetCore.Authorization;
+using prid.Helpers;
 
 namespace prid.Controllers;
 
@@ -17,6 +18,26 @@ public class QuizzesController : ControllerBase
     public QuizzesController(Context context, IMapper mapper) {
         _context = context;
         _mapper = mapper;
+    }
+
+    [Authorized(Role.Teacher)]
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<QuizDTO>>> GetAll() {
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
+        // Récupère une liste de tous les quiz
+        var quizzes = await _context.Quizzes
+                                    .Include(q => q.Database)
+                                    .Include(q => q.Attempts)
+                                    .Include(q => q.Questions)
+                                    .ToListAsync();
+        foreach(var q in quizzes){
+            q.Status = "teacher";
+        }
+        return _mapper.Map<List<QuizDTO>>(quizzes);
     }
 
     [HttpGet("trainingQuizzes")]
