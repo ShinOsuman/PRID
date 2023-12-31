@@ -5,7 +5,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from '../components/app/app.component';
 import { NavMenuComponent } from '../components/nav-menu/nav-menu.component';
-import { UserListComponent } from '../components/userlist/userlist.component';
 import { AppRoutes } from '../routing/app.routing';
 import { RestrictedComponent } from '../components/restricted/restricted.component';
 import { UnknownComponent } from '../components/unknown/unknown.component';
@@ -31,7 +30,6 @@ import { TeacherComponent } from '../components/teacher/teacher.component';
   declarations: [
     AppComponent,
     NavMenuComponent,
-    UserListComponent,
     LoginComponent,
     UnknownComponent,
     RestrictedComponent,
