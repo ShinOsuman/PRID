@@ -1,0 +1,45 @@
+<form [formGroup]="quizEditForm" (ngSubmit)="onSubmit()">
+    <div class="form-content">
+        <table>
+            <tr>
+                <td id="first">
+                    <label class="form-label me-5" for="fname">Nom </label>
+                </td>
+                <td>
+                    <input class="form-control" #name matInput [formControl]="ctlName" required appSetFocus>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <label class="text-danger" *ngIf="ctlName.hasError('required')">Requis</label>
+                    <label class="text-danger" *ngIf="ctlName.hasError('custom')">{{ctlName.errors?.custom}}</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label me-5" for="fdescription">Description</label>
+                </td>
+                <td>
+                    <textarea class="form-control" #description matInput [formControl]="ctlDescription" rows="1"></textarea>
+                </td>
+                <td></td>
+                <td>
+                    <label class="text-danger" *ngIf="ctlDescription.hasError('custom')">{{ctlDescription.errors?.custom}}</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label me-5" for="fquizType">Type de quiz</label>
+                </td>
+                <td>
+                    <mat-radio-group aria-label="fquizType" [formControl]="ctlquizType">
+                        <mat-radio-button value="0">Training</mat-radio-button>
+                        <mat-radio-button value="1">Test</mat-radio-button>
+                    </mat-radio-group>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+</form>

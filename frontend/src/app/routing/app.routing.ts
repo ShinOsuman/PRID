@@ -8,6 +8,7 @@ import { HomeComponent } from '../components/home/home.component';
 import { QuizzesComponent } from '../components/quizzes/quizzes.component';
 import { QuestionComponent } from '../components/question/question.component';
 import { TeacherComponent } from '../components/teacher/teacher.component';
+import { QuizEditComponent } from '../components/quiz-edit/quiz-edit.component';
 
 
 const appRoutes: Routes = [
@@ -18,8 +19,9 @@ const appRoutes: Routes = [
   },
   { path: 'teacher', component: TeacherComponent, canActivate: [AuthGuard], data: { roles: [Role.Teacher]} },
   { path: 'quizzes', component: QuizzesComponent, canActivate: [AuthGuard], data: { roles: [Role.Student]} },
-  { path: 'restricted', component: RestrictedComponent },
+  { path: 'quizedition/:id', component: QuizEditComponent, canActivate: [AuthGuard], data: { roles: [Role.Teacher]} },
   { path: 'question/:id', component: QuestionComponent, canActivate: [AuthGuard]},
+  { path: 'restricted', component: RestrictedComponent },
   { path: '**', component: UnknownComponent }
 ];
 

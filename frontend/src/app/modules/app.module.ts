@@ -22,6 +22,9 @@ import { QuestionComponent } from '../components/question/question.component';
 import { CodeEditorComponent } from '../components/code-editor/code-editor.component';
 import { QuizClotureComponent } from '../components/quiz-cloture/quiz-cloture.component';
 import { TeacherComponent } from '../components/teacher/teacher.component';
+import { QuizEditComponent } from '../components/quiz-edit/quiz-edit.component';
+import { MatRadioModule } from '@angular/material/radio';
+
 
 
 
@@ -40,7 +43,8 @@ import { TeacherComponent } from '../components/teacher/teacher.component';
     QuestionComponent,
     CodeEditorComponent,
     QuizClotureComponent,
-    TeacherComponent
+    TeacherComponent,
+    QuizEditComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -49,7 +53,8 @@ import { TeacherComponent } from '../components/teacher/teacher.component';
     ReactiveFormsModule,
     AppRoutes,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

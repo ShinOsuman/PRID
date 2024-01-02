@@ -17,8 +17,8 @@ export class TeacherComponent {
         //TODO
     }
 
-    createQuiz() {
-        //TODO
+    createQuiz(id: number) {
+        this.router.navigate(['/quizedition/' + id]);
     }
 
 }
