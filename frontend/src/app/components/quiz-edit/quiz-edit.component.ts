@@ -13,10 +13,15 @@ export class QuizEditComponent implements OnInit {
     ctlName! : FormControl;
     ctlDescription! : FormControl;
     ctlquizType! : FormControl;
+    selected = "option1";
+    isPublished = false;
+    quizHasAnswers = false;
 
     constructor(
         private formBuilder: FormBuilder,
-    ) {}
+    ) {
+
+    }
 
     ngOnInit(): void {
         this.ctlName = this.formBuilder.control('', Validators.required);

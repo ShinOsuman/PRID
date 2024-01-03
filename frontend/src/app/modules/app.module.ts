@@ -24,7 +24,7 @@ import { QuizClotureComponent } from '../components/quiz-cloture/quiz-cloture.co
 import { TeacherComponent } from '../components/teacher/teacher.component';
 import { QuizEditComponent } from '../components/quiz-edit/quiz-edit.component';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -54,7 +54,8 @@ import { MatRadioModule } from '@angular/material/radio';
     AppRoutes,
     BrowserAnimationsModule,
     SharedModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
