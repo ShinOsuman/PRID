@@ -20,6 +20,8 @@ export class QuizEditComponent implements OnInit {
     ctlIsPublished! : FormControl;
     ctlQuizType! : FormControl;
     ctlDatabase! : FormControl;
+    ctlStartDate! : FormControl;
+    ctlEndDate! : FormControl;
     quizHasAnswers = false;
     quizId!: number;
     selectedValue: string = "0";
@@ -37,6 +39,8 @@ export class QuizEditComponent implements OnInit {
         this.ctlIsPublished = this.formBuilder.control(false);
         this.ctlQuizType = this.formBuilder.control(false);
         this.ctlDatabase = this.formBuilder.control(0);
+        this.ctlStartDate = this.formBuilder.control('', []);
+        this.ctlEndDate = this.formBuilder.control('', []);
     }
 
     ngOnInit(): void {
@@ -54,6 +58,8 @@ export class QuizEditComponent implements OnInit {
                     this.ctlDescription.setValue(quiz.description);
                     this.ctlIsPublished.setValue(quiz.isPublished);
                     this.ctlQuizType.setValue(quiz.isTest);
+                    this.ctlStartDate.setValue(quiz.startDate);
+                    this.ctlEndDate.setValue(quiz.endDate);
                 }
             });
         }

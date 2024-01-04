@@ -50,18 +50,20 @@
                 </mat-radio-group>
             </td>
             <td class="ps-5">
-                <mat-form-field class="pe-5">
-                    <mat-label>Date début</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Date fin</mat-label>
-                    <input matInput [matDatepicker]="picker">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+                <div *ngIf="ctlQuizType.value">
+                    <mat-form-field class="pe-5">
+                        <mat-label>Date début</mat-label>
+                        <input matInput [matDatepicker]="start" [formControl]="ctlStartDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="start"></mat-datepicker-toggle>
+                        <mat-datepicker #start></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Date fin</mat-label>
+                        <input matInput [matDatepicker]="end" [formControl]="ctlEndDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="end"></mat-datepicker-toggle>
+                        <mat-datepicker #end></mat-datepicker>
+                    </mat-form-field>
+                </div>
             </td>
             <td class="ps-5">
                 <button class="me-3" *ngIf="!quizHasAnswers">
