@@ -87,5 +87,24 @@ public class QuizzesController : ControllerBase
         return _mapper.Map<List<QuizDTO>>(quizzes);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<QuizDTO>> GetQuiz(int id) {
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
+        // Récupère un quiz par son id
+        var quiz = await _context.Quizzes
+                                    .Include(q => q.Database)
+                                    .Include(q => q.Attempts)
+                                    .Include(q => q.Questions)
+                                    .SingleOrDefaultAsync(q => q.Id == id);
+        if(quiz == null){
+            return NotFound();
+        }
+        return _mapper.Map<QuizDTO>(quiz);
+    }
+
 
 }

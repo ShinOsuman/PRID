@@ -85,6 +85,6 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     editQuiz(id: number): void {
-        //TODO
+        this.router.navigate(['/quizedition/' + id]);
     }
 }

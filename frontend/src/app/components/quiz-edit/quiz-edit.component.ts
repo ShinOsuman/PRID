@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { QuizService } from "src/app/services/quiz.service";
 
 
 @Component({
@@ -12,13 +14,16 @@ export class QuizEditComponent implements OnInit {
 
     ctlName! : FormControl;
     ctlDescription! : FormControl;
-    ctlquizType! : FormControl;
     selected = "option1";
     isPublished = false;
     quizHasAnswers = false;
+    quizId!: number;
+    selectedValue: string = "0";
 
     constructor(
         private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private quizService: QuizService
     ) {
 
     }
@@ -26,7 +31,20 @@ export class QuizEditComponent implements OnInit {
     ngOnInit(): void {
         this.ctlName = this.formBuilder.control('', Validators.required);
         this.ctlDescription = this.formBuilder.control('', Validators.required);
-        this.ctlquizType = this.formBuilder.control('', Validators.required);
+        this.refresh();
+    }
+
+    refresh() {
+        this.quizId = this.route.snapshot.params.id;
+        if(this.quizId != 0){
+            this.quizService.getQuiz(this.quizId).subscribe(quiz => {
+                if(quiz){
+                    this.ctlName.setValue(quiz.name);
+                    this.ctlDescription.setValue(quiz.description);
+                }
+            });
+        }
+        
     }
 
     onSubmit() {

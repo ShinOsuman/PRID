@@ -1,79 +1,76 @@
 <form [formGroup]="quizEditForm" (ngSubmit)="onSubmit()">
-    <div class="form-content">
-        <table>
-            <tr>
-                <td id="first">
-                    <label class="form-label me-5" for="fname">Nom </label>
-                </td>
-                <td>
-                    <input class="form-control" #name matInput [formControl]="ctlName" [disabled]="quizHasAnswers" required appSetFocus >
-                </td>
-                <td class="ps-5">
-                    <mat-form-field>
-                        <mat-label>Base de données</mat-label>
-                        <mat-select [(value)]="selected" [disabled]="quizHasAnswers">
-                            <mat-option value="option1">fournisseurs</mat-option>
-                            <mat-option value="option2">facebook</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </td>
-                <td class="ps-5">
-                    <mat-slide-toggle [checked]="isPublished" [disabled]="quizHasAnswers">Publié</mat-slide-toggle>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <label class="text-danger" *ngIf="ctlName.hasError('required')">Requis</label>
-                    <label class="text-danger" *ngIf="ctlName.hasError('custom')">{{ctlName.errors?.custom}}</label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="form-label me-5" for="fdescription">Description</label>
-                </td>
-                <td>
-                    <textarea class="form-control" #description matInput [formControl]="ctlDescription" rows="1" [disabled]="quizHasAnswers"></textarea>
-                </td>
-                <td></td>
-                <td>
-                    <label class="text-danger" *ngIf="ctlDescription.hasError('custom')">{{ctlDescription.errors?.custom}}</label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label class="form-label me-5" for="fquizType">Type de quiz</label>
-                </td>
-                <td>
-                    <mat-radio-group aria-label="fquizType" [formControl]="ctlquizType" [disabled]="quizHasAnswers">
-                        <mat-radio-button value="0" [disabled]="quizHasAnswers">Training</mat-radio-button>
-                        <mat-radio-button value="1" [disabled]="quizHasAnswers">Test</mat-radio-button>
-                    </mat-radio-group>
-                </td>
-                <td class="ps-5">
-                    <mat-form-field class="pe-5">
-                        <mat-label>Date début</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Date fin</mat-label>
-                        <input matInput [matDatepicker]="picker">
-                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                </td>
-                <td class="ps-5">
-                    <button class="me-3" *ngIf="!quizHasAnswers">
-                        <mat-icon>save</mat-icon>
-                    </button>
-                    <button>
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-    
+    <table>
+        <tr>
+            <td id="first">
+                <label class="form-label me-5" for="fname">Nom </label>
+            </td>
+            <td>
+                <input class="form-control" #name matInput [formControl]="ctlName" [disabled]="quizHasAnswers" required appSetFocus >
+            </td>
+            <td class="ps-5">
+                <mat-form-field>
+                    <mat-label>Base de données</mat-label>
+                    <mat-select [(value)]="selected" [disabled]="quizHasAnswers">
+                        <mat-option value="option1">fournisseurs</mat-option>
+                        <mat-option value="option2">facebook</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td class="ps-5">
+                <mat-slide-toggle [checked]="isPublished" [disabled]="quizHasAnswers">Publié</mat-slide-toggle>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <label class="text-danger" *ngIf="ctlName.hasError('required')">Requis</label>
+                <label class="text-danger" *ngIf="ctlName.hasError('custom')">{{ctlName.errors?.custom}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-label me-5" for="fdescription">Description</label>
+            </td>
+            <td>
+                <textarea class="form-control" #description matInput [formControl]="ctlDescription" rows="1" [disabled]="quizHasAnswers"></textarea>
+            </td>
+            <td></td>
+            <td>
+                <label class="text-danger" *ngIf="ctlDescription.hasError('custom')">{{ctlDescription.errors?.custom}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-label me-5" for="fquizType">Type de quiz</label>
+            </td>
+            <td>
+                <mat-radio-group aria-label="fquizType">
+                    <mat-radio-button value="0" [disabled]="quizHasAnswers">Training</mat-radio-button>
+                    <mat-radio-button value="1" [disabled]="quizHasAnswers">Test</mat-radio-button>
+                </mat-radio-group>
+            </td>
+            <td class="ps-5">
+                <mat-form-field class="pe-5">
+                    <mat-label>Date début</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Date fin</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </td>
+            <td class="ps-5">
+                <button class="me-3" *ngIf="!quizHasAnswers">
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button>
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
 </form>
