@@ -17,7 +17,7 @@
                 </mat-form-field>
             </td>
             <td class="ps-5">
-                <mat-slide-toggle [checked]="isPublished" [disabled]="quizHasAnswers">Publié</mat-slide-toggle>
+                <mat-slide-toggle [formControl]="ctlIsPublished" [checked]="ctlIsPublished.value" [disabled]="quizHasAnswers">Publié</mat-slide-toggle>
             </td>
         </tr>
         <tr>
