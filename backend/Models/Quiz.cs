@@ -75,3 +75,17 @@ public class QuizDTO
 public class QuizWithIdDto {
     public int Id { get; set; }
 }
+
+public class QuizWithQuestionsAndDatabaseDto {
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? Description { get; set; }
+    public bool IsPublished { get; set; } = false;
+    public bool IsClosed { get; set; } = true;
+    public bool IsTest { get; set; } = false;
+
+    public DateTimeOffset? StartDate { get; set; }
+    public DateTimeOffset? EndDate { get; set; }
+    public ICollection<QuestionDto> Questions { get; set; } = new HashSet<QuestionDto>();
+    public DatabaseDto Database { get; set; } = null!;
+}
