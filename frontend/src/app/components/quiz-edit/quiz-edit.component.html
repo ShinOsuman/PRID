@@ -10,7 +10,7 @@
             <td class="ps-5">
                 <mat-form-field>
                     <mat-label>Base de données</mat-label>
-                    <mat-select [(value)]="selectedDatabase" [disabled]="quizHasAnswers">
+                    <mat-select [formControl]="ctlDatabase" [disabled]="quizHasAnswers">
                         <mat-option [value]="0"></mat-option>
                         <mat-option *ngFor="let d of databases" [value]="d.id">{{d.name}}</mat-option>
                     </mat-select>
@@ -44,9 +44,9 @@
                 <label class="form-label me-5" for="fquizType">Type de quiz</label>
             </td>
             <td>
-                <mat-radio-group aria-label="fquizType">
-                    <mat-radio-button value="0" [disabled]="quizHasAnswers">Training</mat-radio-button>
-                    <mat-radio-button value="1" [disabled]="quizHasAnswers">Test</mat-radio-button>
+                <mat-radio-group [formControl]="ctlQuizType" aria-label="fquizType">
+                    <mat-radio-button [value]="false" [disabled]="quizHasAnswers">Training</mat-radio-button>
+                    <mat-radio-button [value]="true" [disabled]="quizHasAnswers">Test</mat-radio-button>
                 </mat-radio-group>
             </td>
             <td class="ps-5">
