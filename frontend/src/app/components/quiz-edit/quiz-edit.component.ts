@@ -29,6 +29,7 @@ export class QuizEditComponent implements OnInit {
     databases!: Database[];
     quiz!: Quiz;
     questions!: Question[];
+    questionsToDelete: Question[] = [];
     panelOpenState = false;
 
     constructor(
@@ -86,6 +87,21 @@ export class QuizEditComponent implements OnInit {
         var question = new Question();
         question.order = this.questions.length + 1;
         this.questions.push(question);
+    }
+    
+    deleteQuestion(question: Question) {
+        //supprime une question de la liste des questions
+        this.questions = this.questions.filter(q => q.id != question.id);
+        this.questionsToDelete.push(question);
+        this.reassignOrder();
+        console.log(this.questions);
+    }
+
+    reassignOrder() {
+        //réassigne les ordres des questions
+        for(var i = 0; i<= this.questions.length; i++){
+            this.questions[i].order = i+1;
+        }
     }
 
 }

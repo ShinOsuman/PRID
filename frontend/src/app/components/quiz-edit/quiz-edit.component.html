@@ -90,6 +90,17 @@
                 Question {{q.order}}
             </mat-panel-title>
         </mat-expansion-panel-header>
+        <div>
+            <button class="me-2" [disabled]="q.order==1">
+                <mat-icon>arrow_drop_up</mat-icon>
+            </button>
+            <button class="me-2" [disabled]="q.order==questions.length">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <button (click)="deleteQuestion(q)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
     </mat-expansion-panel>
 </mat-accordion>
 
