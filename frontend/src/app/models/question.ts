@@ -17,6 +17,7 @@ export class Question {
     nextQuestion?: number;
     sendButtonDisabled?: boolean = true;
     solutions?: Solution[];
+    panelOpenState?: boolean = false;
 
     get quizName(): string {
         return this.quiz ? this.quiz.name || 'N/A' : 'N/A';

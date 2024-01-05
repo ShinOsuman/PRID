@@ -80,4 +80,12 @@ export class QuizEditComponent implements OnInit {
     onSubmit() {
         //TODO
     }
+
+    addQuestion() {
+        //crée une nouvelle question et l'ajoute à la liste des questions
+        var question = new Question();
+        question.order = this.questions.length + 1;
+        this.questions.push(question);
+    }
+
 }
