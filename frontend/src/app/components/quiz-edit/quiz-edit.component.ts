@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Database } from "src/app/models/database";
+import { Question } from "src/app/models/question";
 import { Quiz } from "src/app/models/quiz";
 import { DatabaseService } from "src/app/services/database.service";
 import { QuizService } from "src/app/services/quiz.service";
@@ -27,6 +28,8 @@ export class QuizEditComponent implements OnInit {
     selectedValue: string = "0";
     databases!: Database[];
     quiz!: Quiz;
+    questions!: Question[];
+    panelOpenState = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -53,6 +56,7 @@ export class QuizEditComponent implements OnInit {
             this.quizService.getQuiz(this.quizId).subscribe(quiz => {
                 if(quiz){
                     this.quiz = quiz;
+                    this.questions = quiz.questions ?? [];
                     this.ctlDatabase.setValue(quiz?.database?.id ?? 0);
                     this.ctlName.setValue(quiz.name);
                     this.ctlDescription.setValue(quiz.description);

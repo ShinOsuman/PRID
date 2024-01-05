@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { Database } from './database';
+import { Question } from './question';
 
 
 export class Quiz {
@@ -19,6 +20,7 @@ export class Quiz {
     status? : string;
     evaluation? : string;
     firstQuestionId? : number;
+    questions?: Question[];
 
     get testStartDate(): string {
         return this.startDate !== null && this.startDate? this.startDate?.toLocaleDateString('fr-BE') : 'N/A';

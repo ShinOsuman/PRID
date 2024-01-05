@@ -88,7 +88,7 @@ public class QuizzesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<QuizDTO>> GetQuiz(int id) {
+    public async Task<ActionResult<QuizWithQuestionsAndDatabaseDto>> GetQuiz(int id) {
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
         if(user == null){
@@ -103,7 +103,7 @@ public class QuizzesController : ControllerBase
         if(quiz == null){
             return NotFound();
         }
-        return _mapper.Map<QuizDTO>(quiz);
+        return _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz);
     }
 
 
