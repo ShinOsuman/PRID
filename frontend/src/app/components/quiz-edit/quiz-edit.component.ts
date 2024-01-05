@@ -104,4 +104,26 @@ export class QuizEditComponent implements OnInit {
         }
     }
 
+    moveUp(question: Question) {
+        //déplace une question vers le haut
+        var index = this.questions.indexOf(question);
+        if(index > 0){
+            var temp = this.questions[index-1];
+            this.questions[index-1] = question;
+            this.questions[index] = temp;
+        }
+        this.reassignOrder();
+    }
+
+    moveDown(question: Question) {
+        //déplace une question vers le bas
+        var index = this.questions.indexOf(question);
+        if(index < this.questions.length - 1){
+            var temp = this.questions[index+1];
+            this.questions[index+1] = question;
+            this.questions[index] = temp;
+        }
+        this.reassignOrder();
+    }
+
 }

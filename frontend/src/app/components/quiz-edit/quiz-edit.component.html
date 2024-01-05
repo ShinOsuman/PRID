@@ -91,10 +91,10 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <div>
-            <button class="me-2" [disabled]="q.order==1">
+            <button class="me-2" [disabled]="q.order==1" (click)="moveUp(q)">
                 <mat-icon>arrow_drop_up</mat-icon>
             </button>
-            <button class="me-2" [disabled]="q.order==questions.length">
+            <button class="me-2" [disabled]="q.order==questions.length" (click)="moveDown(q)">
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <button (click)="deleteQuestion(q)">
