@@ -32,6 +32,7 @@ export class QuizEditComponent implements OnInit {
     questions!: Question[];
     questionsToDelete: Question[] = [];
     panelOpenState = false;
+    solutionsToDelete: Solution[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -157,6 +158,12 @@ export class QuizEditComponent implements OnInit {
         solution.order = question.solutions!.length + 1;
         question.solutions!.push(solution);
 
+    }
+
+    deleteSolution(solution: Solution, question: Question) {
+        question.solutions = question.solutions!.filter(s => s.id != solution.id);
+        this.solutionsToDelete.push(solution);
+        this.reassignSolutionOrder(question);
     }
 
 }

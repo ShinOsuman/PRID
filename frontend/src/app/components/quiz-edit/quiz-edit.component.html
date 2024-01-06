@@ -121,7 +121,7 @@
                     <code-editor #editor [(ngModel)]="s.sql" [readOnly]="quizHasAnswers" [database]="quiz.database?.name"></code-editor>
                 </div>
                 <div class="d-flex align-items-center">
-                    <button class="pt-3 pb-3">
+                    <button class="pt-3 pb-3" (click)="deleteSolution(s,q)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
