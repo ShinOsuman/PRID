@@ -49,7 +49,7 @@ public class QuizzesController : ControllerBase
         }
         // Récupère une liste de tous les quiz d'entraînement
         var quizzes = await _context.Quizzes
-                                    .Where(q => !q.IsTest)
+                                    .Where(q => !q.IsTest && q.IsPublished)
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
                                     .Include(q => q.Questions)
@@ -69,7 +69,7 @@ public class QuizzesController : ControllerBase
         }
         // Récupère une liste de tous les quiz de tests
         var quizzes = await _context.Quizzes
-                                    .Where(q => q.IsTest)
+                                    .Where(q => q.IsTest && q.IsPublished)
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
                                     .Include(q => q.Questions)
