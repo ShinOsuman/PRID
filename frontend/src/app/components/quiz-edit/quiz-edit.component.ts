@@ -69,6 +69,10 @@ export class QuizEditComponent implements OnInit {
                     this.ctlEndDate.setValue(quiz.endDate);
                 }
             });
+        }else {
+            this.quiz = new Quiz();
+            this.quiz.questions = [];
+            this.questions = this.quiz.questions;
         }
 
         this.databaseService.getDatabases().subscribe(databases => {
