@@ -107,8 +107,7 @@
             <textarea class="text-primary w-100" rows="4" [(ngModel)]="q.body"></textarea>
         </div>
         <ng-container *ngFor="let s of q.solutions">
-            <code-editor #editor [(ngModel)]="s.sql" [readOnly]="quizHasAnswers" [database]="quiz.database?.name"></code-editor>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <button [disabled]="s.order==1" (click)="moveSolutionUp(s,q)">
                         <mat-icon>arrow_drop_up</mat-icon>
@@ -118,7 +117,10 @@
                         <mat-icon>arrow_drop_down</mat-icon>
                     </button>
                 </div>
-                <div>
+                <div style="width: 90%;">
+                    <code-editor #editor [(ngModel)]="s.sql" [readOnly]="quizHasAnswers" [database]="quiz.database?.name"></code-editor>
+                </div>
+                <div class="d-flex align-items-center">
                     <button class="pt-3 pb-3">
                         <mat-icon>delete</mat-icon>
                     </button>
