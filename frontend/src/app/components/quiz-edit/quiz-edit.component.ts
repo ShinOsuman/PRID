@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Database } from "src/app/models/database";
 import { Question } from "src/app/models/question";
 import { Quiz } from "src/app/models/quiz";
+import { Solution } from "src/app/models/solution";
 import { DatabaseService } from "src/app/services/database.service";
 import { QuizService } from "src/app/services/quiz.service";
 
@@ -94,7 +95,6 @@ export class QuizEditComponent implements OnInit {
         this.questions = this.questions.filter(q => q.id != question.id);
         this.questionsToDelete.push(question);
         this.reassignOrder();
-        console.log(this.questions);
     }
 
     reassignOrder() {
@@ -124,6 +124,32 @@ export class QuizEditComponent implements OnInit {
             this.questions[index] = temp;
         }
         this.reassignOrder();
+    }
+
+    moveSolutionUp(solution: Solution, question: Question) {
+        var index = question.solutions?.indexOf(solution) ?? -1;
+        if(index > 0){
+            var temp = question.solutions![index-1];
+            question.solutions![index-1] = solution;
+            question.solutions![index] = temp;
+        }
+        this.reassignSolutionOrder(question);
+    }
+
+    moveSolutionDown(solution: Solution, question: Question) {
+        var index = question.solutions?.indexOf(solution) ?? -1;
+        if(index < question.solutions!.length - 1){
+            var temp = question.solutions![index+1];
+            question.solutions![index+1] = solution;
+            question.solutions![index] = temp;
+        }
+        this.reassignSolutionOrder(question);
+    }
+
+    reassignSolutionOrder(question: Question) {
+        for(var i = 0; i<= question.solutions!.length; i++){
+            question.solutions![i].order = i+1;
+        }
     }
 
 }

@@ -101,6 +101,30 @@
                 <mat-icon>delete</mat-icon>
             </button>
         </div>
+        <br>
+        <div>
+            <p>Intitulé</p>
+            <textarea class="text-primary w-100" rows="4" [(ngModel)]="q.body"></textarea>
+        </div>
+        <ng-container *ngFor="let s of q.solutions">
+            <code-editor #editor [(ngModel)]="s.sql" [readOnly]="quizHasAnswers" [database]="quiz.database?.name"></code-editor>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button [disabled]="s.order==1" (click)="moveSolutionUp(s,q)">
+                        <mat-icon>arrow_drop_up</mat-icon>
+                    </button>
+                    <br>
+                    <button [disabled]="q.solutions?.length == s.order" (click)="moveSolutionDown(s,q)">
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <button class="pt-3 pb-3">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
     </mat-expansion-panel>
 </mat-accordion>
 

@@ -99,6 +99,7 @@ public class QuizzesController : ControllerBase
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
                                     .Include(q => q.Questions)
+                                    .ThenInclude(q => q.Solutions)
                                     .SingleOrDefaultAsync(q => q.Id == id);
         if(quiz == null){
             return NotFound();
