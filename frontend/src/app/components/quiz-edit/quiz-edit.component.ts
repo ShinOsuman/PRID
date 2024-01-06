@@ -88,6 +88,7 @@ export class QuizEditComponent implements OnInit {
         //crée une nouvelle question et l'ajoute à la liste des questions
         var question = new Question();
         question.order = this.questions.length + 1;
+        question.solutions = [];
         this.questions.push(question);
     }
     
