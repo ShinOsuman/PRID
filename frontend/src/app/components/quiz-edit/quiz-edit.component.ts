@@ -152,4 +152,11 @@ export class QuizEditComponent implements OnInit {
         }
     }
 
+    addSolution(question: Question) {
+        var solution = new Solution();
+        solution.order = question.solutions!.length + 1;
+        question.solutions!.push(solution);
+
+    }
+
 }
