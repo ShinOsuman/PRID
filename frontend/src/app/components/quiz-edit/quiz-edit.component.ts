@@ -48,7 +48,9 @@ export class QuizEditComponent implements OnInit {
         this.ctlDescription = this.formBuilder.control('', []);
         this.ctlIsPublished = this.formBuilder.control(false);
         this.ctlQuizType = this.formBuilder.control(false);
-        this.ctlDatabase = this.formBuilder.control(0);
+        this.ctlDatabase = this.formBuilder.control(0, [
+            this.databaseSelectedError()
+        ]);
         this.ctlStartDate = this.formBuilder.control('', []);
         this.ctlEndDate = this.formBuilder.control('', []);
     }
@@ -92,6 +94,15 @@ export class QuizEditComponent implements OnInit {
         //TODO
     }
 
+    databaseSelectedError(): any {
+        return (ctl: FormControl) => {
+            if(ctl.value == 0){
+                return { databaseSelectedError: true };
+            }
+            return null;
+        }
+    }
+
     nameUsed(): any {
         let timeout: NodeJS.Timeout;
         return (ctl: FormControl) => {
@@ -110,7 +121,7 @@ export class QuizEditComponent implements OnInit {
             });
         };
     }
-    
+
     addQuestion() {
         //crée une nouvelle question et l'ajoute à la liste des questions
         var question = new Question();
