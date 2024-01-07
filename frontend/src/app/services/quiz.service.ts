@@ -31,4 +31,10 @@ export class QuizService {
             map(res => plainToInstance(Quiz, res))
         );
     }
+
+    getByName(name: string): Observable<Quiz> {
+        return this.http.get<any>(`${this.baseUrl}api/Quizzes/getByName/${name}`).pipe(
+            map(res => plainToInstance(Quiz, res))
+        );
+    }
 }

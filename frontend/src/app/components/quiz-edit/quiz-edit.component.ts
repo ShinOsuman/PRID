@@ -40,7 +40,11 @@ export class QuizEditComponent implements OnInit {
         private quizService: QuizService,
         private databaseService: DatabaseService
     ) {
-        this.ctlName = this.formBuilder.control('', Validators.required);
+        this.ctlName = this.formBuilder.control('', [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+        ], [this.nameUsed()]);
         this.ctlDescription = this.formBuilder.control('', []);
         this.ctlIsPublished = this.formBuilder.control(false);
         this.ctlQuizType = this.formBuilder.control(false);
@@ -88,6 +92,25 @@ export class QuizEditComponent implements OnInit {
         //TODO
     }
 
+    nameUsed(): any {
+        let timeout: NodeJS.Timeout;
+        return (ctl: FormControl) => {
+            clearTimeout(timeout);
+            const name = ctl.value;
+            return new Promise(resolve => {
+                timeout = setTimeout(() => {
+                    if (ctl.pristine) {
+                        resolve(null);
+                    } else {
+                        this.quizService.getByName(name).subscribe(quiz => {
+                            resolve(quiz.id != this.quiz.id ? { nameUsed: true } : null);
+                        });
+                    }
+                }, 300);
+            });
+        };
+    }
+    
     addQuestion() {
         //crée une nouvelle question et l'ajoute à la liste des questions
         var question = new Question();

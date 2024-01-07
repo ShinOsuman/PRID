@@ -107,5 +107,21 @@ public class QuizzesController : ControllerBase
         return _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz);
     }
 
+    [Authorized(Role.Teacher)]
+    [HttpGet("getByName/{name}")]
+    public async Task<ActionResult<QuizWithQuestionsAndDatabaseDto>> GetQuizByName(string name) {
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
+        // Récupère un quiz par son nom
+        var quiz = await _context.Quizzes.SingleOrDefaultAsync(q => q.Name == name);
+        if(quiz == null){
+            return NotFound();
+        }
+        return _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz);
+    }
+
 
 }

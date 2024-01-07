@@ -6,6 +6,9 @@
             </td>
             <td>
                 <input class="form-control" #name matInput [formControl]="ctlName" [disabled]="quizHasAnswers" required appSetFocus >
+                <mat-error *ngIf="ctlName.hasError('required')">Requis</mat-error>
+                <mat-error *ngIf="ctlName.hasError('minlength')">Minimum {{ctlName.errors?.minlength?.requiredLength}} caractères</mat-error>
+                <mat-error *ngIf="ctlName.hasError('nameUsed')">Nom déjà utilisé</mat-error>
             </td>
             <td class="ps-5">
                 <mat-form-field>
@@ -18,13 +21,6 @@
             </td>
             <td class="ps-5">
                 <mat-slide-toggle [formControl]="ctlIsPublished" [checked]="ctlIsPublished.value" [disabled]="quizHasAnswers">Publié</mat-slide-toggle>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <label class="text-danger" *ngIf="ctlName.hasError('required')">Requis</label>
-                <label class="text-danger" *ngIf="ctlName.hasError('custom')">{{ctlName.errors?.custom}}</label>
             </td>
         </tr>
         <tr>
