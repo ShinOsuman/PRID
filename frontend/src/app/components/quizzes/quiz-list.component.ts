@@ -9,6 +9,7 @@ import { Quiz } from "src/app/models/quiz";
 import { QuizService } from "src/app/services/quiz.service";
 import { StateService } from "src/app/services/state.service";
 import { Router } from "@angular/router";
+import { AttemptService } from "src/app/services/attempt.service";
 
 @Component({
     selector: 'quiz-list',
@@ -29,6 +30,7 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     constructor(
         private quizService: QuizService,
         private stateService: StateService,
+        private attemptService: AttemptService,
         private router: Router,
         public snackBar: MatSnackBar
     ){
@@ -86,5 +88,11 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
 
     editQuiz(id: number): void {
         this.router.navigate(['/quizedition/' + id]);
+    }
+
+    newQuizAttempt(id: number): void {
+        this.attemptService.newAttempt(id).subscribe( attempt => {
+            this.router.navigate(['/question/' + id]);
+        })
     }
 }

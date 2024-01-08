@@ -40,13 +40,17 @@
                         <button *ngIf="row.status == 'teacher'" mat-icon-button tabindex="-1" [matTooltip]="'modifier'" (click)="editQuiz(row.id)">
                             <mat-icon>edit</mat-icon>
                         </button>
-                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
-                            <mat-icon *ngIf="row.status == 'EN_COURS'">edit</mat-icon>
-                            <mat-icon *ngIf="row.status == 'FINI'">book</mat-icon>
-                            <mat-icon *ngIf="row.status == 'PAS_COMMENCE'">add_box</mat-icon>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'EN_COURS'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'FINI'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
+                            <mat-icon>book</mat-icon>
+                        </button>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'PAS_COMMENCE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="newQuizAttempt(row.id)">
+                            <mat-icon>add_box</mat-icon>
                         </button>
                         <span *ngIf="row.status == 'FINI' && !row.isTest">
-                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'">
+                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'" (click)="newQuizAttempt(row.id)">
                                 <mat-icon>add_box</mat-icon>
                             </button>
                         </span>

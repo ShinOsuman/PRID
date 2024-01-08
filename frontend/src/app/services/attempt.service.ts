@@ -6,6 +6,9 @@ import { Attempt } from "../models/attempt";
 
 @Injectable({providedIn:'root'})
 export class AttemptService {
+    newAttempt(id: number): Observable<Attempt> {
+        return this.http.post<any>(`${this.baseUrl}api/Attempts/new`, { id });
+    }
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string){ }
 
 

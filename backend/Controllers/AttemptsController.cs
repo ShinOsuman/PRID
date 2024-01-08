@@ -85,5 +85,28 @@ public class AttemptsController : ControllerBase
 
         return Ok();
     }
+
+    [Authorize]
+    [HttpPost("new")]
+    public async Task<ActionResult<AttemptDto>> NewAttempt(QuizWithIdDto quizDTO){
+        //récupération de l'utilisateur
+        var pseudo = User.Identity!.Name;
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
+        if(user == null){
+            return BadRequest();
+        }
+        //récupération du quiz
+        var quiz = await _context.Quizzes.Where(q => q.Id == quizDTO.Id)
+                                        .Include(q => q.Attempts).SingleOrDefaultAsync();
+        if(quiz == null){
+            return BadRequest();
+        }
+        //création de la tentative
+        var attempt = new Attempt { StudentId = user.Id, QuizId = quiz.Id, Start = DateTime.Now };
+        _context.Attempts.Add(attempt);
+        _context.SaveChanges();
+
+        return _mapper.Map<AttemptDto>(attempt);
+    }
     
 }
