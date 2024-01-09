@@ -33,6 +33,7 @@ export class QuizEditComponent implements OnInit {
     questionsToDelete: Question[] = [];
     panelOpenState = false;
     solutionsToDelete: Solution[] = [];
+    quizError: string = "";
 
     constructor(
         private formBuilder: FormBuilder,
@@ -91,7 +92,9 @@ export class QuizEditComponent implements OnInit {
     }
 
     onSubmit() {
-        //TODO
+        //on réattribue la liste de questions à l'objet quiz 
+        //parce que l'objet change de référence quand on le modifie dans le formulaire
+        this.quiz.questions = this.questions;
     }
 
     databaseSelectedError(): any {
@@ -101,6 +104,34 @@ export class QuizEditComponent implements OnInit {
             }
             return null;
         }
+    }
+
+    quizHasNoQuestions(): boolean {
+        if(this.questions){
+            if(this.questions.length == 0){
+                this.quizError = "Aucune question";
+                return true;
+            }else {
+                var q = this.questions.find(q => q.body!.length < 2);
+                if(q){
+                    this.quizError = "L'intitulé de chaque question doit contenir minimum 2 caractères";
+                    return true;
+                }else {
+                    var s = this.questions.find(q => q.solutions!.length == 0);
+                    if(s){
+                        this.quizError = "Chaque question doit avoir au moins une solution";
+                        return true;
+                    }else {
+                        var s = this.questions.find(q => q.solutions!.find(s => s.sql!.length == 0));
+                        if(s){
+                            this.quizError = "Aucune solution ne peut être vide";
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     nameUsed(): any {
@@ -125,6 +156,7 @@ export class QuizEditComponent implements OnInit {
     addQuestion() {
         //crée une nouvelle question et l'ajoute à la liste des questions
         var question = new Question();
+        question.body = "";
         question.order = this.questions.length + 1;
         question.solutions = [];
         this.questions.push(question);
@@ -132,14 +164,14 @@ export class QuizEditComponent implements OnInit {
     
     deleteQuestion(question: Question) {
         //supprime une question de la liste des questions
-        this.questions = this.questions.filter(q => q.id != question.id);
-        this.questionsToDelete.push(question);
+        var index = this.questions.indexOf(question);
+        this.questions = this.questions.filter(q => q.order != question.order);
         this.reassignOrder();
     }
 
     reassignOrder() {
         //réassigne les ordres des questions
-        for(var i = 0; i<= this.questions.length; i++){
+        for(var i = 0; i< this.questions.length; i++){
             this.questions[i].order = i+1;
         }
     }
@@ -187,13 +219,14 @@ export class QuizEditComponent implements OnInit {
     }
 
     reassignSolutionOrder(question: Question) {
-        for(var i = 0; i<= question.solutions!.length; i++){
+        for(var i = 0; i< question.solutions!.length; i++){
             question.solutions![i].order = i+1;
         }
     }
 
     addSolution(question: Question) {
         var solution = new Solution();
+        solution.sql = "";
         solution.order = question.solutions!.length + 1;
         question.solutions!.push(solution);
 

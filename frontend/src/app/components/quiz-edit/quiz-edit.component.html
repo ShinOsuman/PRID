@@ -76,7 +76,7 @@
 <div class="d-flex justify-content-between mt-5">
     <h1>Questions</h1>
     <div>
-        test
+        <mat-error *ngIf="quizHasNoQuestions()">{{quizError}}</mat-error>
     </div>
 </div>
 <mat-accordion>
