@@ -41,4 +41,16 @@ export class QuizService {
     deleteQuiz(id: number): Observable<any> {
         return this.http.delete<any>(`${this.baseUrl}api/Quizzes/${id}`);
     }
+
+    saveQuiz(quiz: Quiz): Observable<Quiz> {
+        return this.http.post<any>(`${this.baseUrl}api/Quizzes`, quiz).pipe(
+            map(res => plainToInstance(Quiz, res))
+        );
+    }
+
+    editQuiz(quiz: Quiz): Observable<Quiz> {
+        return this.http.put<any>(`${this.baseUrl}api/Quizzes`, quiz).pipe(
+            map(res => plainToInstance(Quiz, res))
+        );
+    }
 }

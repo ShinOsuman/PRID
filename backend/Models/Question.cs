@@ -41,3 +41,12 @@ public class QuestionDto {
     public int NextQuestion { get; set; } = 0;
     public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
 }
+
+public class QuestionWithSolutionsDto {
+    public int Id { get; set; }
+    public int Order { get; set; }
+    public string Body { get; set; } = "";
+    public int QuizId { get; set; }
+    public QuizDTO Quiz { get; set; } = null!;
+    public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
+}

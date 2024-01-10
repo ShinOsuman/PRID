@@ -134,5 +134,26 @@ public class QuizzesController : ControllerBase
         return NoContent();
     }
 
+    [Authorized(Role.Teacher)]
+    [HttpPost]
+    public async Task<ActionResult<QuizDTO>> SaveQuiz(QuizWithQuestionsAndDatabaseDto quizDto) {
+        var quiz = _mapper.Map<Quiz>(quizDto);
+        Console.WriteLine(quiz);
+        _context.Quizzes.Add(quiz);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(nameof(GetQuiz), new {id = quiz.Id}, _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz));
+    }
+
+    [Authorized(Role.Teacher)]
+    [HttpPut]
+    public async Task<IActionResult> UpdateQuiz(QuizWithQuestionsAndDatabaseDto quizDto) {
+        var quiz = await _context.Quizzes.FindAsync(quizDto.Id);
+        if (quiz == null)
+            return NotFound();
+        _mapper.Map(quizDto, quiz);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
 
 }

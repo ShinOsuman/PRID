@@ -1,4 +1,4 @@
-<form [formGroup]="quizEditForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="quizEditForm">
     <table>
         <tr>
             <td id="first">
@@ -14,10 +14,9 @@
                 <mat-form-field>
                     <mat-label>Base de données</mat-label>
                     <mat-select [formControl]="ctlDatabase" [disabled]="quizHasAnswers">
-                        <mat-option [value]="0"></mat-option>
                         <mat-option *ngFor="let d of databases" [value]="d.id">{{d.name}}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="ctlDatabase.hasError('databaseSelectedError')">Requis</mat-error>
+                    <mat-error *ngIf="ctlDatabase.hasError('required')">Requis</mat-error>
                 </mat-form-field>
             </td>
             <td class="ps-5">
@@ -63,7 +62,8 @@
                 </div>
             </td>
             <td class="ps-5">
-                <button class="me-3" *ngIf="!quizHasAnswers">
+                <button type="submit" form="quizEditForm" class="me-3" *ngIf="!quizHasAnswers" 
+                    [disabled]="quizEditForm.pristine || quizEditForm.invalid || quizHasNoQuestions()" (click)="saveQuiz()">
                     <mat-icon>save</mat-icon>
                 </button>
                 <button [disabled]="quizId == 0" (click)="deleteQuiz()">
@@ -145,3 +145,9 @@
         </button>
     </div>
 </div>
+<pre>
+    {{quizEditForm.value | json }}
+    {{quizEditForm.pristine | json }}
+    {{quizEditForm.invalid | json }}
+    {{quizEditForm.pending | json }}
+    </pre>

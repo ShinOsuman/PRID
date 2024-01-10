@@ -86,6 +86,6 @@ public class QuizWithQuestionsAndDatabaseDto {
 
     public DateTimeOffset? StartDate { get; set; }
     public DateTimeOffset? EndDate { get; set; }
-    public ICollection<QuestionDto> Questions { get; set; } = new HashSet<QuestionDto>();
+    public ICollection<QuestionWithSolutionsDto> Questions { get; set; } = new HashSet<QuestionWithSolutionsDto>();
     public DatabaseDto Database { get; set; } = null!;
 }

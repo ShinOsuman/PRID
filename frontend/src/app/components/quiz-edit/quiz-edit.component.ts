@@ -28,13 +28,10 @@ export class QuizEditComponent implements OnInit {
     ctlEndDate! : FormControl;
     quizHasAnswers = false;
     quizId!: number;
-    selectedValue: string = "0";
     databases!: Database[];
     quiz!: Quiz;
     questions!: Question[];
-    questionsToDelete: Question[] = [];
     panelOpenState = false;
-    solutionsToDelete: Solution[] = [];
     quizError: string = "";
 
     constructor(
@@ -54,11 +51,21 @@ export class QuizEditComponent implements OnInit {
         this.ctlDescription = this.formBuilder.control('', []);
         this.ctlIsPublished = this.formBuilder.control(false);
         this.ctlQuizType = this.formBuilder.control(false);
-        this.ctlDatabase = this.formBuilder.control(0, [
-            this.databaseSelectedError()
+        this.ctlDatabase = this.formBuilder.control('', [
+            Validators.required
         ]);
         this.ctlStartDate = this.formBuilder.control('', []);
         this.ctlEndDate = this.formBuilder.control('', []);
+
+        this.quizEditForm = this.formBuilder.group({
+            name: this.ctlName,
+            description: this.ctlDescription,
+            isPublished: this.ctlIsPublished,
+            isTest: this.ctlQuizType,
+            databaseId: this.ctlDatabase,
+            startDate: this.ctlStartDate,
+            endDate: this.ctlEndDate
+        });
     }
 
     ngOnInit(): void {
@@ -96,19 +103,38 @@ export class QuizEditComponent implements OnInit {
         
     }
 
-    onSubmit() {
+    saveQuiz(){
+
         //on réattribue la liste de questions à l'objet quiz 
         //parce que l'objet change de référence quand on le modifie dans le formulaire
         this.quiz.questions = this.questions;
-    }
-
-    databaseSelectedError(): any {
-        return (ctl: FormControl) => {
-            if(ctl.value == 0){
-                return { databaseSelectedError: true };
-            }
-            return null;
+        this.quiz.name = this.ctlName.value;
+        this.quiz.description = this.ctlDescription.value;
+        this.quiz.isPublished = this.ctlIsPublished.value;
+        this.quiz.isTest = this.ctlQuizType.value;
+        if(this.quiz.isTest){
+            this.quiz.startDate = this.ctlStartDate.value;
+            this.quiz.endDate = this.ctlEndDate.value;
         }
+        this.quiz.database = this.databases.find(d => d.id == this.ctlDatabase.value);
+        this.quiz.databaseId = this.ctlDatabase.value;
+
+        if(this.quizId != 0){
+            this.quizService.editQuiz(this.quiz).subscribe(res => {
+                console.log("tets");
+                if(res){
+                    this.refresh();
+                }
+            });
+        }else {
+            this.quizService.saveQuiz(this.quiz).subscribe(res => {
+                if(res){
+                    this.refresh();
+                }
+            });
+        }
+
+        
     }
 
     quizHasNoQuestions(): boolean {
@@ -150,7 +176,11 @@ export class QuizEditComponent implements OnInit {
                         resolve(null);
                     } else {
                         this.quizService.getByName(name).subscribe(quiz => {
-                            resolve(quiz.id != this.quiz.id ? { nameUsed: true } : null);
+                            if(this.quizId == 0){
+                                resolve(quiz ? { nameUsed: true } : null);
+                            }else {
+                                resolve(quiz.id != this.quiz.id ? { nameUsed: true } : null);
+                            }
                         });
                     }
                 }, 300);
@@ -238,8 +268,7 @@ export class QuizEditComponent implements OnInit {
     }
 
     deleteSolution(solution: Solution, question: Question) {
-        question.solutions = question.solutions!.filter(s => s.id != solution.id);
-        this.solutionsToDelete.push(solution);
+        question.solutions = question.solutions!.filter(s => s.order != solution.order);
         this.reassignSolutionOrder(question);
     }
 
@@ -250,8 +279,7 @@ export class QuizEditComponent implements OnInit {
                 if(result){
                     this.quizService.deleteQuiz(this.quizId).subscribe(res => {
                         this.router.navigate(['/teacher']);
-                    }
-                    );
+                    });
                 }
             })
         }
