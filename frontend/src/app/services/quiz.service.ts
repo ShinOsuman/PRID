@@ -37,4 +37,8 @@ export class QuizService {
             map(res => plainToInstance(Quiz, res))
         );
     }
+
+    deleteQuiz(id: number): Observable<any> {
+        return this.http.delete<any>(`${this.baseUrl}api/Quizzes/${id}`);
+    }
 }

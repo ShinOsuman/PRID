@@ -123,5 +123,16 @@ public class QuizzesController : ControllerBase
         return _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz);
     }
 
+    [Authorized(Role.Teacher)]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuiz(int id) {
+        var quiz = await _context.Quizzes.FindAsync(id);
+        if (quiz == null)
+            return NotFound();
+        _context.Quizzes.Remove(quiz);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
 
 }

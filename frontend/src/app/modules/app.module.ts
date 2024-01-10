@@ -26,6 +26,7 @@ import { QuizEditComponent } from '../components/quiz-edit/quiz-edit.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { QuizDeleteComponent } from '../components/quiz-delete/quiz-delete.component';
 
 
 
@@ -45,7 +46,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     CodeEditorComponent,
     QuizClotureComponent,
     TeacherComponent,
-    QuizEditComponent
+    QuizEditComponent,
+    QuizDeleteComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

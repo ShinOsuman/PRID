@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Database } from "src/app/models/database";
 import { Question } from "src/app/models/question";
 import { Quiz } from "src/app/models/quiz";
 import { Solution } from "src/app/models/solution";
 import { DatabaseService } from "src/app/services/database.service";
 import { QuizService } from "src/app/services/quiz.service";
+import { QuizDeleteComponent } from "../quiz-delete/quiz-delete.component";
 
 
 @Component({
@@ -39,7 +41,10 @@ export class QuizEditComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private quizService: QuizService,
-        private databaseService: DatabaseService
+        private databaseService: DatabaseService,
+        public dialog: MatDialog,
+        private router: Router
+
     ) {
         this.ctlName = this.formBuilder.control('', [
             Validators.required,
@@ -236,6 +241,20 @@ export class QuizEditComponent implements OnInit {
         question.solutions = question.solutions!.filter(s => s.id != solution.id);
         this.solutionsToDelete.push(solution);
         this.reassignSolutionOrder(question);
+    }
+
+    deleteQuiz(){
+        if(this.quizId != 0){
+            const dlg = this.dialog.open(QuizDeleteComponent);
+            dlg.beforeClosed().subscribe(result => {
+                if(result){
+                    this.quizService.deleteQuiz(this.quizId).subscribe(res => {
+                        this.router.navigate(['/teacher']);
+                    }
+                    );
+                }
+            })
+        }
     }
 
 }
