@@ -100,7 +100,18 @@ export class QuizEditComponent implements OnInit {
                 this.databases = databases;
             }
         });
-
+        
+        this.ctlQuizType.valueChanges.subscribe(value =>{
+            if(value){
+                this.ctlStartDate.setValidators([Validators.required, this.startDateError()]);
+                this.ctlEndDate.setValidators([Validators.required, this.endDateError()]);
+            }else {
+                this.ctlStartDate.setValidators([]);
+                this.ctlEndDate.setValidators([]);
+            }
+            this.ctlStartDate.updateValueAndValidity();
+            this.ctlEndDate.updateValueAndValidity();
+        });
         
     }
 
@@ -133,8 +144,32 @@ export class QuizEditComponent implements OnInit {
                 }
             });
         }
+    }
 
-        
+    startDateError(): any {
+        return (ctl: FormControl) => {
+            const startDate = ctl.value;
+            const endDate = this.ctlEndDate.value;
+            if(startDate && endDate){
+                if(startDate > endDate){
+                    return { startDateMinError: true };
+                }
+            }
+            return null;
+        };
+    }
+
+    endDateError(): any {
+        return (ctl: FormControl) => {
+            const startDate = this.ctlStartDate.value;
+            const endDate = ctl.value;
+            if(startDate && endDate){
+                if(startDate > endDate){
+                    return { endDateMinError: true };
+                }
+            }
+            return null;
+        };
     }
 
     quizHasNoQuestions(): boolean {

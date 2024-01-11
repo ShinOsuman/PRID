@@ -52,12 +52,16 @@
                         <input matInput [matDatepicker]="start" [formControl]="ctlStartDate">
                         <mat-datepicker-toggle matIconSuffix [for]="start"></mat-datepicker-toggle>
                         <mat-datepicker #start></mat-datepicker>
+                        <mat-error *ngIf="ctlStartDate.hasError('required')">Requis</mat-error>
+                        <mat-error *ngIf="ctlStartDate.hasError('startDateMinError')">Date de début doit être plus petite que date de fin</mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Date fin</mat-label>
                         <input matInput [matDatepicker]="end" [formControl]="ctlEndDate">
                         <mat-datepicker-toggle matIconSuffix [for]="end"></mat-datepicker-toggle>
                         <mat-datepicker #end></mat-datepicker>
+                        <mat-error *ngIf="ctlEndDate.hasError('required')">Requis</mat-error>
+                        <mat-error *ngIf="ctlEndDate.hasError('endDateMinError')">Date de fin doit être plus grande que date de début</mat-error>
                     </mat-form-field>
                 </div>
             </td>
