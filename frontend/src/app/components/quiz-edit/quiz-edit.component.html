@@ -63,7 +63,7 @@
             </td>
             <td class="ps-5">
                 <button type="submit" form="quizEditForm" class="me-3" *ngIf="!quizHasAnswers" 
-                    [disabled]="quizEditForm.pristine || quizEditForm.invalid || quizHasNoQuestions()" (click)="saveQuiz()">
+                    [disabled]="quizEditForm.invalid || quizHasNoQuestions()" (click)="saveQuiz()">
                     <mat-icon>save</mat-icon>
                 </button>
                 <button [disabled]="quizId == 0" (click)="deleteQuiz()">
@@ -145,9 +145,3 @@
         </button>
     </div>
 </div>
-<pre>
-    {{quizEditForm.value | json }}
-    {{quizEditForm.pristine | json }}
-    {{quizEditForm.invalid | json }}
-    {{quizEditForm.pending | json }}
-    </pre>

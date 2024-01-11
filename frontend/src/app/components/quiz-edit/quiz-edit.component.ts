@@ -9,6 +9,7 @@ import { Solution } from "src/app/models/solution";
 import { DatabaseService } from "src/app/services/database.service";
 import { QuizService } from "src/app/services/quiz.service";
 import { QuizDeleteComponent } from "../quiz-delete/quiz-delete.component";
+import * as _ from "lodash";
 
 
 @Component({
@@ -121,7 +122,6 @@ export class QuizEditComponent implements OnInit {
 
         if(this.quizId != 0){
             this.quizService.editQuiz(this.quiz).subscribe(res => {
-                console.log("tets");
                 if(res){
                     this.refresh();
                 }
@@ -199,8 +199,7 @@ export class QuizEditComponent implements OnInit {
     
     deleteQuestion(question: Question) {
         //supprime une question de la liste des questions
-        var index = this.questions.indexOf(question);
-        this.questions = this.questions.filter(q => q.order != question.order);
+        _.remove(this.questions, question);
         this.reassignOrder();
     }
 
@@ -257,6 +256,7 @@ export class QuizEditComponent implements OnInit {
         for(var i = 0; i< question.solutions!.length; i++){
             question.solutions![i].order = i+1;
         }
+
     }
 
     addSolution(question: Question) {
@@ -268,7 +268,7 @@ export class QuizEditComponent implements OnInit {
     }
 
     deleteSolution(solution: Solution, question: Question) {
-        question.solutions = question.solutions!.filter(s => s.order != solution.order);
+        _.remove(question.solutions!, solution);
         this.reassignSolutionOrder(question);
     }
 
@@ -284,5 +284,4 @@ export class QuizEditComponent implements OnInit {
             })
         }
     }
-
 }
