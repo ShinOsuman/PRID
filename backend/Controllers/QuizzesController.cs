@@ -147,7 +147,12 @@ public class QuizzesController : ControllerBase
     [Authorized(Role.Teacher)]
     [HttpPut]
     public async Task<IActionResult> UpdateQuiz(QuizWithQuestionsAndDatabaseDto quizDto) {
-        var quiz = await _context.Quizzes.FindAsync(quizDto.Id);
+        var quiz = await _context.Quizzes.Where(q => q.Id == quizDto.Id)
+                                    .Include(q => q.Database)
+                                    .Include(q => q.Attempts)
+                                    .Include(q => q.Questions)
+                                    .ThenInclude(q => q.Solutions)
+                                    .SingleOrDefaultAsync();
         if (quiz == null)
             return NotFound();
         _mapper.Map(quizDto, quiz);
