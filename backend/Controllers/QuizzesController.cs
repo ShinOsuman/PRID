@@ -138,8 +138,8 @@ public class QuizzesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<QuizDTO>> SaveQuiz(QuizWithQuestionsAndDatabaseDto quizDto) {
         var quiz = _mapper.Map<Quiz>(quizDto);
-        Console.WriteLine(quiz);
         _context.Quizzes.Add(quiz);
+        _context.Entry(quiz.Database).State = EntityState.Unchanged;
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetQuiz), new {id = quiz.Id}, _mapper.Map<QuizWithQuestionsAndDatabaseDto>(quiz));
     }

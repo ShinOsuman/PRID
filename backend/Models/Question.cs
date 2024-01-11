@@ -47,6 +47,6 @@ public class QuestionWithSolutionsDto {
     public int Order { get; set; }
     public string Body { get; set; } = "";
     public int QuizId { get; set; }
-    public QuizDTO Quiz { get; set; } = null!;
+    public QuizDTO? Quiz { get; set; } = null!;
     public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
 }
