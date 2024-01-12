@@ -138,6 +138,10 @@ public class QuizzesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<QuizDTO>> SaveQuiz(QuizWithQuestionsAndDatabaseDto quizDto) {
         var quiz = _mapper.Map<Quiz>(quizDto);
+        var result = await new QuizValidator(_context).ValidateAsync(quiz);
+        if(!result.IsValid){
+            return BadRequest(result);
+        }
         _context.Quizzes.Add(quiz);
         _context.Entry(quiz.Database).State = EntityState.Unchanged;
         await _context.SaveChangesAsync();
@@ -156,6 +160,10 @@ public class QuizzesController : ControllerBase
         if (quiz == null)
             return NotFound();
         _mapper.Map(quizDto, quiz);
+        var result = await new QuizValidator(_context).ValidateAsync(quiz);
+        if(!result.IsValid){
+            return BadRequest(result);
+        }
         await _context.SaveChangesAsync();
         return NoContent();
     }
