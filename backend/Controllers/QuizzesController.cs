@@ -142,6 +142,19 @@ public class QuizzesController : ControllerBase
         if(!result.IsValid){
             return BadRequest(result);
         }
+        
+        foreach(var question in quiz.Questions){
+            var resultQuestion = await new QuestionValidator(_context).ValidateAsync(question);
+            if(!resultQuestion.IsValid){
+                return BadRequest(resultQuestion);
+            }
+            foreach(var solution in question.Solutions){
+                var resultSolution = await new SolutionValidator(_context).ValidateAsync(solution);
+                if(!resultSolution.IsValid){
+                    return BadRequest(resultSolution);
+                }
+            }
+        }
         _context.Quizzes.Add(quiz);
         _context.Entry(quiz.Database).State = EntityState.Unchanged;
         await _context.SaveChangesAsync();
@@ -164,6 +177,20 @@ public class QuizzesController : ControllerBase
         if(!result.IsValid){
             return BadRequest(result);
         }
+
+        foreach(var question in quiz.Questions){
+            var resultQuestion = await new QuestionValidator(_context).ValidateAsync(question);
+            if(!resultQuestion.IsValid){
+                return BadRequest(resultQuestion);
+            }
+            foreach(var solution in question.Solutions){
+                var resultSolution = await new SolutionValidator(_context).ValidateAsync(solution);
+                if(!resultSolution.IsValid){
+                    return BadRequest(resultSolution);
+                }
+            }
+        }
+        
         await _context.SaveChangesAsync();
         return NoContent();
     }
