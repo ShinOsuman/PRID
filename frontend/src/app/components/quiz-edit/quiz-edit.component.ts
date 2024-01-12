@@ -234,7 +234,7 @@ export class QuizEditComponent implements OnInit {
     
     deleteQuestion(question: Question) {
         //supprime une question de la liste des questions
-        _.remove(this.questions, question);
+        _.remove(this.quiz.questions!, question);
         this.reassignOrder();
     }
 
