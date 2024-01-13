@@ -19,7 +19,7 @@ public class Quiz
     public ICollection<Question> Questions { get; set; } = new HashSet<Question>();
     public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
     [NotMapped]
-    public string Status { get; set;}= "";
+    public string Status { get; set; }= "";
     [NotMapped]
     public string Evaluation { get; set; } = "N/A";
     [NotMapped]
@@ -50,7 +50,11 @@ public class Quiz
 
     public string GetTestStatus(User user)
     {
-        string res = Attempts.Any(q => q.StudentId == user.Id) ? "FINI" : "PAS_COMMENCE";
+        string res = Attempts.Any(q => q.StudentId == user.Id) ? "EN_COURS" : "PAS_COMMENCE";
+        var StudentAttempts = Attempts.Where(a => a.StudentId == user.Id).OrderBy(a => a.Id).LastOrDefault();
+        if(StudentAttempts != null && StudentAttempts.Finish.HasValue){
+            res = "FINI";
+        }
         if(EndDate!.Value <= DateTimeOffset.Now){
             res = "CLOTURE";
         }
