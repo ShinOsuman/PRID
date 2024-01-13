@@ -94,6 +94,7 @@ export class QuestionComponent implements OnInit {
                 }
             }else {
                 this.query = undefined;
+                this.hasTestAnswer = false;
             }
             this.getAttempt();
             
@@ -145,6 +146,9 @@ export class QuestionComponent implements OnInit {
                 this.solutionsDisabled = true;
             }
             this.getAttempt();
+            if(this.question?.quiz?.isTest){
+                this.hasTestAnswer = true;
+            }
         });
     }
 
