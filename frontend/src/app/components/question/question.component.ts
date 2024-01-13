@@ -131,6 +131,8 @@ export class QuestionComponent implements OnInit {
 
     delete() {
         this.sql = '';
+        this.solutionsDisabled = true;
+        this.query = undefined;
     }
 
     showSolutions(){
