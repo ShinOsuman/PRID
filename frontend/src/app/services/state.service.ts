@@ -3,5 +3,5 @@ import { MatTableState } from "../helpers/mattable.state";
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
-    public quizListState = new MatTableState('name', 'asc', 5);
+    public quizListState = new MatTableState('Name', 'asc', 5);
 }

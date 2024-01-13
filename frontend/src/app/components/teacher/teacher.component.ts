@@ -14,7 +14,7 @@ export class TeacherComponent {
 
 
     filterChanged(e: KeyboardEvent) {  
-        //TODO
+        this.filter =(e.target as HTMLInputElement).value;
     }
 
     createQuiz(id: number) {

@@ -20,8 +20,15 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
     displayedColumns: string []= [];
     dataSource: MatTableDataSource<Quiz> = new MatTableDataSource();
     state: MatTableState;
-    filter: string = '';
+    private _filter?: string = '';
+    get filter(): string | undefined{
+        return this._filter;
+    }
 
+    @Input() set filter(value: string){
+        this._filter = value;
+        this.filterChanged(value);
+    }
     @Input() quizType: 'test' | 'training' | 'teacher' = 'test';
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -94,5 +101,13 @@ export class QuizListComponent implements AfterViewInit, OnDestroy, OnInit {
         this.attemptService.newAttempt(id).subscribe( attempt => {
             this.router.navigate(['/question/' + id]);
         })
+    }
+
+    filterChanged(e: string) {
+        const filterValue = e;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+        this.state.filter = this.dataSource.filter;
+        if (this.dataSource.paginator)
+            this.dataSource.paginator.firstPage();
     }
 }

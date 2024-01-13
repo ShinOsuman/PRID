@@ -1,9 +1,9 @@
 <h1>Quiz</h1>
 <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="filterChanged($event)" [value]="filter" appSetFocus>
+    <input matInput (keyup)="filterChanged($event)" [(ngModel)]="filter" appSetFocus>
 </mat-form-field>
 <p>Quiz d'entraînement :</p>
-<quiz-list [quizType]="'training'"></quiz-list>
+<quiz-list [filter]="filter" [quizType]="'training'"></quiz-list>
 <p>Quiz de test :</p>
-<quiz-list [quizType]="'test'"></quiz-list>
+<quiz-list [filter]="filter" [quizType]="'test'"></quiz-list>
