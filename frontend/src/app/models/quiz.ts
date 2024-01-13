@@ -21,6 +21,7 @@ export class Quiz {
     evaluation? : string;
     firstQuestionId? : number;
     questions?: Question[];
+    hasAttempts?: boolean;
 
     get testStartDate(): string {
         return this.startDate !== null && this.startDate? this.startDate?.toLocaleDateString('fr-BE') : 'N/A';

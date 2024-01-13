@@ -27,7 +27,7 @@ export class QuizEditComponent implements OnInit {
     ctlDatabase! : FormControl;
     ctlStartDate! : FormControl;
     ctlEndDate! : FormControl;
-    quizHasAnswers = false;
+    quizHasAttempts = false;
     quizId!: number;
     databases!: Database[];
     quiz!: Quiz;
@@ -87,6 +87,9 @@ export class QuizEditComponent implements OnInit {
                     this.ctlQuizType.setValue(quiz.isTest);
                     this.ctlStartDate.setValue(quiz.startDate);
                     this.ctlEndDate.setValue(quiz.endDate);
+                    if(quiz.isTest){
+                        this.quizHasAttempts = quiz.hasAttempts ?? false;
+                    }
                 }
             });
         }else {

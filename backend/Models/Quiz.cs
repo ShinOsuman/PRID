@@ -30,7 +30,13 @@ public class Quiz
                             .Select(q => q.Id)
                             .FirstOrDefault();
         } 
-     }
+    }
+    [NotMapped]
+    public bool HasAttempts {
+        get{
+            return Attempts.Count > 0;
+        }
+    }
 
     public string GetStatus(User user)
     {
@@ -88,4 +94,5 @@ public class QuizWithQuestionsAndDatabaseDto {
     public DateTimeOffset? EndDate { get; set; }
     public ICollection<QuestionWithSolutionsDto> Questions { get; set; } = new HashSet<QuestionWithSolutionsDto>();
     public DatabaseDto Database { get; set; } = null!;
+    public bool HasAttempts { get; set; } = false;
 }
