@@ -98,8 +98,8 @@ public class QuizzesController : ControllerBase
         var quiz = await _context.Quizzes
                                     .Include(q => q.Database)
                                     .Include(q => q.Attempts)
-                                    .Include(q => q.Questions)
-                                    .ThenInclude(q => q.Solutions)
+                                    .Include(q => q.Questions.OrderBy(q => q.Order))
+                                    .ThenInclude(q => q.Solutions.OrderBy(s => s.Order))
                                     .SingleOrDefaultAsync(q => q.Id == id);
         if(quiz == null){
             return NotFound();
@@ -144,12 +144,12 @@ public class QuizzesController : ControllerBase
         }
         
         foreach(var question in quiz.Questions){
-            var resultQuestion = await new QuestionValidator(_context).ValidateAsync(question);
+            var resultQuestion = await new QuestionValidator(_context, quiz.Questions).ValidateAsync(question);
             if(!resultQuestion.IsValid){
                 return BadRequest(resultQuestion);
             }
             foreach(var solution in question.Solutions){
-                var resultSolution = await new SolutionValidator(_context).ValidateAsync(solution);
+                var resultSolution = await new SolutionValidator(_context, question.Solutions).ValidateAsync(solution);
                 if(!resultSolution.IsValid){
                     return BadRequest(resultSolution);
                 }
@@ -179,12 +179,12 @@ public class QuizzesController : ControllerBase
         }
 
         foreach(var question in quiz.Questions){
-            var resultQuestion = await new QuestionValidator(_context).ValidateAsync(question);
+            var resultQuestion = await new QuestionValidator(_context, quiz.Questions).ValidateAsync(question);
             if(!resultQuestion.IsValid){
                 return BadRequest(resultQuestion);
             }
             foreach(var solution in question.Solutions){
-                var resultSolution = await new SolutionValidator(_context).ValidateAsync(solution);
+                var resultSolution = await new SolutionValidator(_context, question.Solutions).ValidateAsync(solution);
                 if(!resultSolution.IsValid){
                     return BadRequest(resultSolution);
                 }

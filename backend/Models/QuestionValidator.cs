@@ -9,9 +9,11 @@ namespace prid.Models;
 public class QuestionValidator : AbstractValidator<Question>{
 
     private readonly Context _context;
+    private ICollection<Question> _questions;
     
-    public QuestionValidator(Context context) {
+    public QuestionValidator(Context context, ICollection<Question> questions) {
         _context = context;
+        _questions = questions;
 
         CreateRules();
     }
@@ -26,7 +28,7 @@ public class QuestionValidator : AbstractValidator<Question>{
             .GreaterThan(0);
 
         RuleFor(q => new {q.Id, q.Order, q.QuizId})
-            .MustAsync((q, token) => BeUniqueOrder(q.Id, q.Order, q.QuizId, token))
+            .Must((q) => BeUniqueOrder(q.Id, q.Order, q.QuizId))
             .OverridePropertyName(nameof(Question.Order))
             .WithMessage("{PropertyName} must be unique in a quiz");
 
@@ -36,10 +38,12 @@ public class QuestionValidator : AbstractValidator<Question>{
             
     }
 
-    private async Task<bool> BeUniqueOrder(int id, int order, int quizId, CancellationToken token) {
-        return !await _context.Questions.AnyAsync(q => q.Order == order 
-                                                && q.Id != id
-                                                && q.QuizId == quizId, 
-                                                cancellationToken: token);
+    private bool BeUniqueOrder(int id, int order, int quizId) {
+        foreach(var q in _questions) {
+            if(q.Order == order && q.Id != id && q.QuizId == quizId) {
+                return false;
+            }
+        }
+        return true;
     }
 }
