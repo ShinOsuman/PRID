@@ -23,7 +23,7 @@
     Votre requête : {{question?.answerStatus}}
 </div>
 <code-editor #editor [(ngModel)]="sql" [readOnly]="!clotureVisible" [database]="dbName"></code-editor>
-<div *ngIf="buttonsDisabled() && clotureVisible">
+<div *ngIf="buttonsDisabled() && clotureVisible && !hasTestAnswer">
     <button (click)="sendAction(false)">Envoyer</button>
     <button [disabled]="!deleteActivated" (click)="delete()">Effacer</button>
     <Button *ngIf="!isTest()" (click)="showSolutions()">Voir solutions</Button>

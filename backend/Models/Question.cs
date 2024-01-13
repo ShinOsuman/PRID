@@ -50,3 +50,7 @@ public class QuestionWithSolutionsDto {
     public QuizDTO? Quiz { get; set; } = null!;
     public ICollection<SolutionDto> Solutions { get; set; } = new HashSet<SolutionDto>();
 }
+
+public class QuestionWithIdDto {
+    public int Id { get; set; }
+}

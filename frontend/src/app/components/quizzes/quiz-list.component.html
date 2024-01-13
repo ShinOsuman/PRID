@@ -46,11 +46,11 @@
                         <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'FINI'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
                             <mat-icon>book</mat-icon>
                         </button>
-                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'PAS_COMMENCE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="newQuizAttempt(row.id)">
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'PAS_COMMENCE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="newQuizAttempt(row.firstQuestionId)">
                             <mat-icon>add_box</mat-icon>
                         </button>
                         <span *ngIf="row.status == 'FINI' && !row.isTest">
-                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'" (click)="newQuizAttempt(row.id)">
+                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'" (click)="newQuizAttempt(row.firstQuestionId)">
                                 <mat-icon>add_box</mat-icon>
                             </button>
                         </span>

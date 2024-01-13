@@ -23,7 +23,6 @@ public class AttemptsController : ControllerBase
     [Authorize]
     [HttpPost("getlastattempt")]
     public async Task<ActionResult<AttemptDto>> GetLastAttempt(QuizWithIdDto quizDTO){
-        Console.WriteLine("id recu: " + quizDTO.Id);
         //récupération de l'utilisateur
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
@@ -88,16 +87,21 @@ public class AttemptsController : ControllerBase
 
     [Authorize]
     [HttpPost("new")]
-    public async Task<ActionResult<AttemptDto>> NewAttempt(QuizWithIdDto quizDTO){
+    public async Task<ActionResult<AttemptDto>> NewAttempt(QuestionWithIdDto questionDto){
         //récupération de l'utilisateur
         var pseudo = User.Identity!.Name;
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Pseudo == pseudo);
         if(user == null){
             return BadRequest();
         }
+        //récupération de la question
+        var question = await _context.Questions.Where(q => q.Id == questionDto.Id)
+                                        .Include(q => q.Quiz).SingleOrDefaultAsync();
+        if(question == null){
+            return BadRequest();
+        }
         //récupération du quiz
-        var quiz = await _context.Quizzes.Where(q => q.Id == quizDTO.Id)
-                                        .Include(q => q.Attempts).SingleOrDefaultAsync();
+        var quiz = question.Quiz;
         if(quiz == null){
             return BadRequest();
         }

@@ -20,6 +20,7 @@ export class QuestionComponent implements OnInit {
     question?: Question;
     attempt?: Attempt;
     query?: Query;
+    hasTestAnswer: boolean = false;
     private _sql: string = '';
     get sql(){
         return this._sql;
@@ -88,6 +89,9 @@ export class QuestionComponent implements OnInit {
             this.solutionsDisabled = true;
             if(this.question.answer){
                 this.sendAction(true);
+                if(this.question.quiz?.isTest){
+                    this.hasTestAnswer = true;
+                }
             }else {
                 this.query = undefined;
             }

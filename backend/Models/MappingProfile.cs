@@ -49,5 +49,8 @@ public class MappingProfile : Profile
 
         CreateMap<Question, QuestionWithSolutionsDto>();
         CreateMap<QuestionWithSolutionsDto, Question>();
+
+        CreateMap<Question, QuestionWithIdDto>();
+        CreateMap<QuestionWithIdDto, Question>();
     }
 }
