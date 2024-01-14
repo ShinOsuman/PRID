@@ -120,13 +120,18 @@ public class Query {
 
     public void GetCompare(string databaseName){
         if(Comments.Count == 0 ){
-            EvaluateSolution(Solutions.FirstOrDefault()?.Sql ?? "", databaseName);
-            if(SolutionRowCount != RowCount){
-                BadResults.Add("nombre de lignes incorrect");
+            if(RowCount == 0 && Columns.Length == 0){
+                Comments.Add("Requête vide");
+            }else {
+                EvaluateSolution(Solutions.FirstOrDefault()?.Sql ?? "", databaseName);
+                if(SolutionRowCount != RowCount){
+                    BadResults.Add("nombre de lignes incorrect");
+                }
+                if(SolutionColumns.Length != Columns.Length){
+                    BadResults.Add("nombre de colonnes incorrect");
+                }
             }
-            if(SolutionColumns.Length != Columns.Length){
-                BadResults.Add("nombre de colonnes incorrect");
-            }
+            
         }
     }
 
