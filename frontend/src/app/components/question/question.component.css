@@ -1,0 +1,15 @@
+thead th {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: solid 1px black
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tbody tr td{
+    padding: 10px;
+    border: solid 1px black
+}

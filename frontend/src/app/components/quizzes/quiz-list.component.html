@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="mat-elevation-z2">
+            <table mat-table [dataSource]="dataSource" matSort matSortDisableClear>
+                <ng-container matColumnDef="Nom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+                    <td mat-cell *matCellDef="let row">{{row.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="Base de données">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Base de données</th>
+                    <td mat-cell *matCellDef="let row">{{row.database.name}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+                    <td mat-cell *matCellDef="let row">{{row.quizType}}</td>
+                </ng-container>
+                <ng-container matColumnDef="TeacherStatut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                    <td mat-cell *matCellDef="let row">{{row.quizStatus}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Date début">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de début</th>
+                    <td mat-cell *matCellDef="let row">{{row.testStartDate}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Date fin">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Date de fin</th>
+                    <td mat-cell *matCellDef="let row">{{row.testEndDate}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Statut">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+                    <td mat-cell *matCellDef="let row">{{row.status}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Evaluation">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Evaluation</th>
+                    <td mat-cell *matCellDef="let row">{{row.evaluation}}</td>
+                </ng-container>
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngIf="row.status == 'teacher'" mat-icon-button tabindex="-1" [matTooltip]="'modifier'" (click)="editQuiz(row.id)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'EN_COURS'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'FINI'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="openQuiz(row.firstQuestionId)">
+                            <mat-icon>book</mat-icon>
+                        </button>
+                        <button *ngIf="row.status != 'CLOTURE'  && row.status!='teacher' && row.status == 'PAS_COMMENCE'" mat-icon-button tabindex="-1" [matTooltip]="row.iconTooltip" (click)="newQuizAttempt(row.firstQuestionId)">
+                            <mat-icon>add_box</mat-icon>
+                        </button>
+                        <span *ngIf="row.status == 'FINI' && !row.isTest">
+                            <button mat-icon-button tabindex="-1" [matTooltip]="'recommencer'" (click)="newQuizAttempt(row.firstQuestionId)">
+                                <mat-icon>add_box</mat-icon>
+                            </button>
+                        </span>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSize]="5" [pageSizeOptions]="[3,5,10,25,100]"></mat-paginator>
+        </div>
+    </div>
+</div>

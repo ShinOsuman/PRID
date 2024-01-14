@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using prid.Models;
+using System;
 
 namespace prid.Models;
 
 public class Context : DbContext
 {
+    private SeedData SeedData { get; set; }
     public Context(DbContextOptions<Context> options)
         : base(options) {
     }
@@ -12,11 +14,24 @@ public class Context : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, Pseudo = "ben", Password = "ben", Email = "ben@test.com" },
-            new User { Id = 2, Pseudo = "bruno", Password = "bruno", Email = "bruno@test.com" }
-        );
+        modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+        modelBuilder.Entity<User>().HasIndex(u => u.Pseudo).IsUnique();
+        modelBuilder.Entity<User>().HasIndex(u => new {u.LastName, u.FirstName}).IsUnique();
+        modelBuilder.Entity<User>()
+            .HasDiscriminator(u => u.Role)
+            .HasValue<Teacher>(Role.Teacher)
+            .HasValue<Student>(Role.Student);
+
+        SeedData = new SeedData(modelBuilder);
     }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<Answer> Answers => Set<Answer>();
+    public DbSet<Attempt> Attempts => Set<Attempt>();
+    public DbSet<Database> Databases => Set<Database>();
+    public DbSet<Question> Questions => Set<Question>();
+    public DbSet<Quiz> Quizzes => Set<Quiz>();
+    public DbSet<Solution> Solutions => Set<Solution>();
+
+
 }

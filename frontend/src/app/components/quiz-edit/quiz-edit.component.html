@@ -1,0 +1,151 @@
+<form [formGroup]="quizEditForm">
+    <table>
+        <tr>
+            <td id="first">
+                <label class="form-label me-5" for="fname">Nom </label>
+            </td>
+            <td>
+                <input class="form-control" #name matInput [formControl]="ctlName" [readonly]="quizHasAttempts" required appSetFocus >
+                <mat-error *ngIf="ctlName.hasError('required')">Requis</mat-error>
+                <mat-error *ngIf="ctlName.hasError('minlength')">Minimum {{ctlName.errors?.minlength?.requiredLength}} caractères</mat-error>
+                <mat-error *ngIf="ctlName.hasError('nameUsed')">Nom déjà utilisé</mat-error>
+            </td>
+            <td class="ps-5">
+                <mat-form-field>
+                    <mat-label>Base de données</mat-label>
+                    <mat-select [formControl]="ctlDatabase" [disabled]="quizHasAttempts">
+                        <mat-option *ngFor="let d of databases" [value]="d.id">{{d.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="ctlDatabase.hasError('required')">Requis</mat-error>
+                </mat-form-field>
+            </td>
+            <td class="ps-5">
+                <mat-slide-toggle [formControl]="ctlIsPublished" [checked]="ctlIsPublished.value" [disabled]="quizHasAttempts">Publié</mat-slide-toggle>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-label me-5" for="fdescription">Description</label>
+            </td>
+            <td>
+                <textarea class="form-control" #description matInput [formControl]="ctlDescription" rows="1" [readonly]="quizHasAttempts"></textarea>
+            </td>
+            <td></td>
+            <td>
+                <label class="text-danger" *ngIf="ctlDescription.hasError('custom')">{{ctlDescription.errors?.custom}}</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label class="form-label me-5" for="fquizType">Type de quiz</label>
+            </td>
+            <td>
+                <mat-radio-group [formControl]="ctlQuizType" aria-label="fquizType">
+                    <mat-radio-button [value]="false" [disabled]="quizHasAttempts">Training</mat-radio-button>
+                    <mat-radio-button [value]="true" [disabled]="quizHasAttempts">Test</mat-radio-button>
+                </mat-radio-group>
+            </td>
+            <td class="ps-5">
+                <div *ngIf="ctlQuizType.value">
+                    <mat-form-field class="pe-5">
+                        <mat-label>Date début</mat-label>
+                        <input [readonly]="quizHasAttempts" matInput [matDatepicker]="start" [formControl]="ctlStartDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="start" [disabled]="quizHasAttempts"></mat-datepicker-toggle>
+                        <mat-datepicker #start></mat-datepicker>
+                        <mat-error *ngIf="ctlStartDate.hasError('required')">Requis</mat-error>
+                        <mat-error *ngIf="ctlStartDate.hasError('startDateMinError')">Date de début doit être plus petite que date de fin</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Date fin</mat-label>
+                        <input matInput [matDatepicker]="end" [formControl]="ctlEndDate" [readonly]="quizHasAttempts">
+                        <mat-datepicker-toggle matIconSuffix [for]="end" [disabled]="quizHasAttempts"></mat-datepicker-toggle>
+                        <mat-datepicker #end></mat-datepicker>
+                        <mat-error *ngIf="ctlEndDate.hasError('required')">Requis</mat-error>
+                        <mat-error *ngIf="ctlEndDate.hasError('endDateMinError')">Date de fin doit être plus grande que date de début</mat-error>
+                    </mat-form-field>
+                </div>
+            </td>
+            <td class="ps-5">
+                <button type="submit" form="quizEditForm" class="me-3" *ngIf="!quizHasAttempts" 
+                    [disabled]="quizEditForm.invalid || quizHasNoQuestions()" (click)="saveQuiz()">
+                    <mat-icon>save</mat-icon>
+                </button>
+                <button [disabled]="quizId == 0" (click)="deleteQuiz()">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+</form>
+<div class="d-flex justify-content-between mt-5">
+    <h1>Questions</h1>
+    <div>
+        <mat-error *ngIf="quizHasNoQuestions()">{{quizError}}</mat-error>
+    </div>
+</div>
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let q of questions" 
+                         (opened)="q.panelOpenState = true"
+                         (closed)="q.panelOpenState = false"
+                         [expanded]="q.panelOpenState">
+        <mat-expansion-panel-header>
+            <mat-panel-title *ngIf="!q.panelOpenState">
+                {{q.order}}. {{q.body}}
+            </mat-panel-title>
+            <mat-panel-title *ngIf="q.panelOpenState">
+                Question {{q.order}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngIf="!quizHasAttempts">
+            <button class="me-2" [disabled]="q.order==1" (click)="moveUp(q)">
+                <mat-icon>arrow_drop_up</mat-icon>
+            </button>
+            <button class="me-2" [disabled]="q.order==questions.length" (click)="moveDown(q)">
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <button (click)="deleteQuestion(q)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+        <br>
+        <div>
+            <p>Intitulé</p>
+            <textarea class="text-primary w-100" rows="4" [(ngModel)]="q.body" [readOnly]="quizHasAttempts"></textarea>
+        </div>
+        <ng-container *ngFor="let s of q.solutions">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <button *ngIf="!quizHasAttempts" class="mb-2" [disabled]="s.order==1" (click)="moveSolutionUp(s,q)">
+                        <mat-icon>arrow_drop_up</mat-icon>
+                    </button>
+                    <br>
+                    <button *ngIf="!quizHasAttempts" class="mt-2" [disabled]="q.solutions?.length == s.order" (click)="moveSolutionDown(s,q)">
+                        <mat-icon>arrow_drop_down</mat-icon>
+                    </button>
+                </div>
+                <div style="width: 90%;">
+                    <code-editor #editor [(ngModel)]="s.sql" [readOnly]="quizHasAttempts" [database]="quiz.database?.name"></code-editor>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button *ngIf="!quizHasAttempts" class="pt-3 pb-3" (click)="deleteSolution(s,q)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <div class="d-flex justify-content-end mt-3">
+            <div>
+                <button [disabled]="quizHasAttempts" (click)="addSolution(q)">
+                    <mat-icon [matTooltip]="'Ajouter solution'">add</mat-icon>
+                </button>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<div class="d-flex justify-content-end mt-3">
+    <div>
+        <button [disabled]="quizHasAttempts" (click)="addQuestion()">
+            <mat-icon [matTooltip]="'Nouvelle question'">add</mat-icon>
+        </button>
+    </div>
+</div>
